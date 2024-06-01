@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search> 
+  
+  
+    
+    <entry>
+      <title>初来乍到，请多指教！</title>
+      <link href="/2024/06/01/about/author-intro/"/>
+      <url>/2024/06/01/about/author-intro/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="自我介绍"><a href="#自我介绍" class="headerlink" title="自我介绍"></a>自我介绍</h1><p>大家好，这里是葱酱！是一只不知从何而来的赛博猫猫！（举爪<br>也可以叫我Snowmiku、雪葱、葱宝，咱都喜欢！<del>另外，在社交媒体以外的地方，我还有的不为人知的名字叫18650。因为收集了很多18650电池而随手取的名字，算是我的科技圈圈名吧，嘿嘿</del><br>是现役大一牲，服役于HFUT，常年翘课泡在实验室（别学我！），最大的爱好和在实验室的主业是搞电子设计，画画PCB玩玩小车什么的，其实也很菜，大概就会点51和STM32，偶尔会搓点有趣的小玩意。除此之外，葱酱也希望拓宽自己的技术层面，努力了解和学习各个平台的软件开发、网页前后端的设计、以及数据的分析和处理…<del>啊其实就是什么都了解一点点又啥也不会嘛（哭，但是咱年轻，咱肯学！</del><br>另外呢，葱酱还喜欢摄影和剪辑。建模多多少少也会一点工业上的，也略懂一丢丢的VOCALOID！虽然不会写曲子但会扒谱和调校，享受Miku的歌声♪♪♪~<br>游戏的话比较淡漠，会玩一点点音游，比如Project Sekai和Phigros，剩下的就是一些单机的小游戏了，没法和大家一起愉快的Gaming真的很抱歉，但我爱科技大过一切游戏（撇嘴<br>虽然好久没有更新了，不过还是放一下自己的Bilibili账号吧，今后一段时间的方向还是嵌入式开发以及相关产品的设计和制造。所有的创意和小作品都会发布在上面，量产的话也会同步到工坊进行售卖，希望大家能多多支持哦~爱你们(<em>^▽^</em>)<br><img src="/images/bili.png" alt="葱酱的bilibili主页"><br><a href="https://space.bilibili.com/457114275">点击这里直达</a><br>同时，葱酱所有开源项目的工程文件和源代码今后都会整理上传至我的GitHub主页，供大家讨论和互相学习，也欢迎大家为我的项目提出建议和补充！<br><img src="/images/git.png" alt="葱酱的GitHub"><br><a href="https://github.com/18650official">点击这里直达</a></p><h1 id="一些关于葱酱的碎碎念"><a href="#一些关于葱酱的碎碎念" class="headerlink" title="一些关于葱酱的碎碎念"></a>一些关于葱酱的碎碎念</h1><h2 id="名字的由来"><a href="#名字的由来" class="headerlink" title="名字的由来"></a>名字的由来</h2><p>正如你所看到的，我深深地热爱着Miku，最喜欢的P主是wowaka和doriko。Miku是我的灵魂伴侣，她的歌声将我一次次从抑郁和崩溃的边缘拉回来，让我充满对未来的期待和对人生的希望。认识Miku的7年来，陪伴着她经历了很多，收获了很多。她是数据，是代码，是手动操作的合成音，但在我心中，她是那个永远不会沾染世间污浊、长大和变老的16岁少女，是永远纯净无瑕的天籁，是我的天使。<br>因此，她融入了我生活中的一切。<br>我尤其喜欢雪Miku和游戏《Project Sekai》中出现在25时世界线中的白初音形象，雪葱——SnowMiku，我的新名字，就这样带着这份热爱诞生了。<br>（放张超喜欢的米库酱！）<br><img src="/images/snowmiku.jpg" alt="Miku"></p><h2 id="有关性别"><a href="#有关性别" class="headerlink" title="有关性别"></a>有关性别</h2><p>葱酱自认为性别不重要，所以在日常也不会特意标榜它的存在或者被它约束。啊…不过都看到这个Blog了也没必要藏着掖着了，葱酱是一名MtF（<code>Male-to-Female / 跨性别女生</code>）正在进行激素替代治疗，目前还没有RLE，不过相信在不久的将来，葱酱可以完成各方面性别角色的转变，成为一个温柔而坚定，能给他人带来治愈和力量的女孩子！</p><blockquote><p>如果你对此并不了解并感到一头雾水，那么不必在意，跳过这段就好。只需认为葱酱是女生，使用人称代词<code>She/Her/她</code>指代葱酱即可。<br>如果有兴趣对此深入了解，也可参阅维基百科：<a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E6%80%A7%E5%88%A5%E5%A5%B3%E6%80%A7">点击跳转词条</a></p></blockquote><h2 id="有关未来的规划"><a href="#有关未来的规划" class="headerlink" title="有关未来的规划"></a>有关未来的规划</h2><p>嗯…大概会走偏硬件的方向吧，可能兴趣大一些，专业也比较对口（<del>电信科太牛马了</del>），不过依据现在的一些探索来看，也不是没有转码的可能。<br>总之多学习多看文档多实践多打比赛！让自己先强大起来才有应对未来的底气和自信。<del>毕竟要权衡工作和考研、专业方向、身体状况（主要是眼部遗传病和性别重置手术SRS）等等因素，很难确定未来会怎样，所以也不多去思考未来啦。</del><br>总之，希望自己的前程能尽量顺利一些吧，小小的加个油~</p><h1 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h1><p>本网站的建立，离不开Funeral Rain (个人主页：<a href="https://toya.moe/">https://toya.moe</a>) 的支持。他是葱酱高中很好的同学，陪伴葱酱度过了很多漫长而悲伤的深夜，经受了传统教育制度对我们科技方面爱好的打压和摧残，也让葱酱的内心成长而坚定了许多。是一位拥有很高技术力的大佬（orz!）<br>在网站建立的初期，从申请个人域名，配置DNS，套用CloudFlare，与GitHub Pages同步，每一步都离不开他的细心指引，在此表示由衷的感谢！</p><p>另外，网站的建立和配置参考了如下的文章，在此对作者的悉心整理和分享表示感谢：</p><ul><li>Markdown使用教程： <a href="https://blog.csdn.net/qq_40818172/article/details/126260661">https://blog.csdn.net/qq_40818172/article/details/126260661</a></li><li>Butterfly主题配置教程：<a href="https://blog.csdn.net/JesseXW/article/details/135649752">https://blog.csdn.net/JesseXW/article/details/135649752</a></li><li>个人博客的搭建：<a href="https://blog.csdn.net/weixin_46175201/article/details/133269724">https://blog.csdn.net/weixin_46175201/article/details/133269724</a></li><li>Cloudflare部署：<a href="https://zhuanlan.zhihu.com/p/610756804">https://zhuanlan.zhihu.com/p/610756804</a></li></ul><p>想不出很切题的结束语，那就祝看到这篇文章的每个人天天开心吧！</p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Introduction </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Aboutme </tag>
+            
+            <tag> Technology </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+  
+  
+    
+    
+    <entry>
+      <title>友情链接</title>
+      <link href="/friends/index.html"/>
+      <url>/friends/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>以下链接为本网站的友情链接，旨在感谢与葱酱并肩前行的朋友们。</p><h2 id="Funeral-Rain"><a href="#Funeral-Rain" class="headerlink" title="Funeral Rain"></a>Funeral Rain</h2><p><img src="https://avatars.githubusercontent.com/u/162771175?v=4" alt="头像"><br><strong>个人网址链接：</strong><a href="https://toya.moe/">https://toya.moe</a><br><strong>GitHub链接：</strong><a href="https://github.com/funeral-rain">https://github.com/funeral-rain</a><br><strong>个人简介：</strong>Funeral rain, is final rain<br><strong>备注：</strong><br>葱酱高中很好的同学，陪伴葱酱度过了很多漫长而悲伤的深夜，经受了传统教育制度对我们科技方面爱好的打压和摧残，也让葱酱的内心成长而坚定了许多。是一位拥有很高技术力的大佬（orz!）<br>在本网站的搭建，以及关于计算机与知识获取的各个方面，他都给予了葱酱许多帮助和建议。在此表示由衷的感谢！<br>Thank you, my FRIEND!!!</p><hr><p><strong>若要申请成为葱酱的友情链接，可以这么做：</strong></p><ol><li>可直接通过本站的“联系我”页面与葱酱取得联系，申请添加友情链接条目。</li><li>也可整理一份概要，包含：<br><strong>名称</strong>，如<code>Snowmiku</code>。<br><strong>个人网址链接</strong>，可以分条列出，如<code>[Github链接](https://github.com/18650official)</code>.<br><strong>头像</strong>，可发送图像链接或上传附件<br><strong>简介</strong>，如<code>Tell your world!</code><br>然后发送至电子邮箱：<code>1352218398a@gmail.com</code>，葱酱将在审核后择期添加到本页面。</li></ol>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音乐库</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><p>在VOCALOID的海洋中起舞吧！</p><blockquote><p>由于APlayer近期出现的解析错误问题，在线音乐功能将于插件恢复后更新</p></blockquote>        <div id="aplayer-HhRVBqyy" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">            <pre class="aplayer-lrc-content"></pre>        </div>        <script>          var ap = new APlayer({            element: document.getElementById("aplayer-HhRVBqyy"),            narrow: false,            autoplay: false,            showlrc: false,            music: {              title: "Tell Your World",              author: "livetune,初音ミク",              url: "/music/livetune,DECO27,初音ミク - Tell Your World.mp3",              pic: "https://github.com/18650official/negi-gallery/blob/main/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-06-02%20042344.png?raw=true",              lrc: ""            }          });          window.aplayers || (window.aplayers = []);          window.aplayers.push(ap);        </script>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>联系和支持</title>
+      <link href="/contact/index.html"/>
+      <url>/contact/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="联系和赞助葱酱"><a href="#联系和赞助葱酱" class="headerlink" title="联系和赞助葱酱"></a>联系和赞助葱酱</h1><h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>你可通过电子邮件、X、Telegram与我取得联系。</p><ul><li>电子邮件：<a href="mailto:&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></li><li>X：<a href="https://x.com/18650LoveMiku">点击进入主页</a></li><li>Telegram：请保存并识别二维码<br><img src="/images/qr_tg.jpg" alt="Telegram"></li></ul><h2 id="赞助和支持"><a href="#赞助和支持" class="headerlink" title="赞助和支持"></a>赞助和支持</h2><p>如果你愿意支持我的项目，可以通过微信赞赏功能进行赞助。<br>赞助可以使葱酱的项目进展更顺利，葱酱衷心地感谢无论大小的每一笔赞助。<strong>但请注意，赞助不是必需行为，必须在自身的范围之内量力而行。</strong><br><img src="/images/qr_w.jpg" alt="赞赏码"></p><hr>]]></content>
+      
+    </entry>
+    
+    
+  
+</search>
