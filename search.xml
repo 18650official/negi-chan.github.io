@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>更新日志 2.0</title>
+      <link href="/2024/06/08/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97-2-0/"/>
+      <url>/2024/06/08/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97-2-0/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="主要更新"><a href="#主要更新" class="headerlink" title="主要更新"></a>主要更新</h1><ul><li>添加了评论功能</li><li>优化界面排版，修复了部分评论无法显示的问题</li></ul><h1 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h1><p>评论功能与数据库的部署：<a href="https://zhuanlan.zhihu.com/p/645394881">https://zhuanlan.zhihu.com/p/645394881</a><br>图床的简单搭建和使用：<a href="https://blog.csdn.net/weixin_43350051/article/details/105428507">https://blog.csdn.net/weixin_43350051/article/details/105428507</a></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Technologies </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> UpdateLog </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>初来乍到，请多指教！</title>
       <link href="/2024/06/01/about/author-intro/"/>
       <url>/2024/06/01/about/author-intro/</url>
@@ -38,7 +63,7 @@
       <link href="/friends/index.html"/>
       <url>/friends/index.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>以下链接为本网站的友情链接，旨在感谢与葱酱并肩前行的朋友们。</p><h2 id="Funeral-Rain"><a href="#Funeral-Rain" class="headerlink" title="Funeral Rain"></a>Funeral Rain</h2><p><img src="https://avatars.githubusercontent.com/u/162771175?v=4" alt="头像"><br><strong>个人网址链接：</strong><a href="https://toya.moe/">https://toya.moe</a><br><strong>GitHub链接：</strong><a href="https://github.com/funeral-rain">https://github.com/funeral-rain</a><br><strong>个人简介：</strong>Funeral rain, is final rain<br><strong>备注：</strong><br>葱酱高中很好的同学，陪伴葱酱度过了很多漫长而悲伤的深夜，经受了传统教育制度对我们科技方面爱好的打压和摧残，也让葱酱的内心成长而坚定了许多。是一位拥有很高技术力的大佬（orz!）<br>在本网站的搭建，以及关于计算机与知识获取的各个方面，他都给予了葱酱许多帮助和建议。在此表示由衷的感谢！<br>Thank you, my FRIEND!!!</p><hr><p><strong>若要申请成为葱酱的友情链接，可以这么做：</strong></p><ol><li>可直接通过本站的“联系我”页面与葱酱取得联系，申请添加友情链接条目。</li><li>也可整理一份概要，包含：<br><strong>名称</strong>，如<code>Snowmiku</code>。<br><strong>个人网址链接</strong>，可以分条列出，如<code>[Github链接](https://github.com/18650official)</code>.<br><strong>头像</strong>，可发送图像链接或上传附件<br><strong>简介</strong>，如<code>Tell your world!</code><br>然后发送至电子邮箱：<code>1352218398a@gmail.com</code>，葱酱将在审核后择期添加到本页面。</li></ol>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="友情链接"><a href="#友情链接" class="headerlink" title="友情链接"></a>友情链接</h1><p>以下链接为本网站的友情链接，旨在感谢与葱酱并肩前行的朋友们。</p><h2 id="Funeral-Rain"><a href="#Funeral-Rain" class="headerlink" title="Funeral Rain"></a>Funeral Rain</h2><p><img src="https://avatars.githubusercontent.com/u/162771175?v=4" alt="头像"><br><strong>个人网址链接：</strong><a href="https://toya.moe/">https://toya.moe</a><br><strong>GitHub链接：</strong><a href="https://github.com/funeral-rain">https://github.com/funeral-rain</a><br><strong>个人简介：</strong>Funeral rain, is final rain<br><strong>备注：</strong><br>葱酱高中很好的同学，陪伴葱酱度过了很多漫长而悲伤的深夜，经受了传统教育制度对我们科技方面爱好的打压和摧残，也让葱酱的内心成长而坚定了许多。是一位拥有很高技术力的大佬（orz!）<br>在本网站的搭建，以及关于计算机与知识获取的各个方面，他都给予了葱酱许多帮助和建议。在此表示由衷的感谢！<br>Thank you, my FRIEND!!!</p><p>##Innocence<br><img src="https://github.com/18650official/negi-gallery/blob/main/innocence_icon.jpg?raw=true" alt="头像"><br><strong>个人网址链接：</strong><a href="https://innocence.ink/">https://innocence.ink</a><br><strong>GitHub链接：</strong><a href="https://github.com/Innocence_">https://github.com/Innocence_</a><br><strong>个人简介：</strong>Stay innocent.<br><strong>备注：</strong><br>是一位超级好的推油！一个温暖、有趣的人。</p><hr><p><strong>若要申请成为葱酱的友情链接，可以这么做：</strong></p><ol><li>可直接通过本站的“联系我”页面与葱酱取得联系，申请添加友情链接条目。</li><li>也可整理一份概要，包含：<br><strong>名称</strong>，如<code>Snowmiku</code>。<br><strong>个人网址链接</strong>，可以分条列出，如<code>[Github链接](https://github.com/18650official)</code>.<br><strong>头像</strong>，可发送图像链接或上传附件<br><strong>简介</strong>，如<code>Tell your world!</code><br>然后发送至电子邮箱：<code>1352218398a@gmail.com</code>，葱酱将在审核后择期添加到本页面。</li></ol>]]></content>
       
     </entry>
     
