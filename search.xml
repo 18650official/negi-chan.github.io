@@ -59,6 +59,17 @@
     
     
     <entry>
+      <title>联系和支持</title>
+      <link href="/contact/index.html"/>
+      <url>/contact/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="联系和赞助葱酱"><a href="#联系和赞助葱酱" class="headerlink" title="联系和赞助葱酱"></a>联系和赞助葱酱</h1><h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>你可通过电子邮件、X、Telegram与我取得联系。</p><ul><li>电子邮件：<a href="mailto:&#49;&#x33;&#53;&#x32;&#x32;&#x31;&#56;&#x33;&#x39;&#56;&#x61;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#x6d;">&#49;&#x33;&#53;&#x32;&#x32;&#x31;&#56;&#x33;&#x39;&#56;&#x61;&#x40;&#x67;&#109;&#x61;&#105;&#108;&#46;&#x63;&#111;&#x6d;</a></li><li>X：<a href="https://x.com/18650LoveMiku">点击进入主页</a></li><li>Telegram：请保存并识别二维码<br><img src="/images/qr_tg.jpg" alt="Telegram"></li></ul><h2 id="赞助和支持"><a href="#赞助和支持" class="headerlink" title="赞助和支持"></a>赞助和支持</h2><p>如果你愿意支持我的项目，可以通过微信赞赏功能进行赞助。<br>赞助可以使葱酱的项目进展更顺利，葱酱衷心地感谢无论大小的每一笔赞助。<strong>但请注意，赞助不是必需行为，必须在自身的范围之内量力而行。</strong><br><img src="/images/qr_w.jpg" alt="赞赏码"></p><hr>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>友情链接</title>
       <link href="/friends/index.html"/>
       <url>/friends/index.html</url>
@@ -74,18 +85,7 @@
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><p>在VOCALOID的海洋中起舞吧！</p><blockquote><p>由于APlayer近期出现的解析错误问题，在线音乐功能将于插件恢复后更新</p></blockquote>        <div id="aplayer-TZcNGRPN" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">            <pre class="aplayer-lrc-content"></pre>        </div>        <script>          var ap = new APlayer({            element: document.getElementById("aplayer-TZcNGRPN"),            narrow: false,            autoplay: false,            showlrc: false,            music: {              title: "Tell Your World",              author: "livetune,初音ミク",              url: "/images/livetune,DECO27,初音ミク - Tell Your World.mp3",              pic: "/images/tellyourworld.png",              lrc: ""            }          });          window.aplayers || (window.aplayers = []);          window.aplayers.push(ap);        </script>]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>联系和支持</title>
-      <link href="/contact/index.html"/>
-      <url>/contact/index.html</url>
-      
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="联系和赞助葱酱"><a href="#联系和赞助葱酱" class="headerlink" title="联系和赞助葱酱"></a>联系和赞助葱酱</h1><h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>你可通过电子邮件、X、Telegram与我取得联系。</p><ul><li>电子邮件：<a href="mailto:&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></li><li>X：<a href="https://x.com/18650LoveMiku">点击进入主页</a></li><li>Telegram：请保存并识别二维码<br><img src="/images/qr_tg.jpg" alt="Telegram"></li></ul><h2 id="赞助和支持"><a href="#赞助和支持" class="headerlink" title="赞助和支持"></a>赞助和支持</h2><p>如果你愿意支持我的项目，可以通过微信赞赏功能进行赞助。<br>赞助可以使葱酱的项目进展更顺利，葱酱衷心地感谢无论大小的每一笔赞助。<strong>但请注意，赞助不是必需行为，必须在自身的范围之内量力而行。</strong><br><img src="/images/qr_w.jpg" alt="赞赏码"></p><hr>]]></content>
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><p>在VOCALOID的海洋中起舞吧！</p><blockquote><p>由于APlayer近期出现的解析错误问题，在线音乐功能将于插件恢复后更新</p></blockquote>        <div id="aplayer-wxzfTLVg" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">            <pre class="aplayer-lrc-content"></pre>        </div>        <script>          var ap = new APlayer({            element: document.getElementById("aplayer-wxzfTLVg"),            narrow: false,            autoplay: false,            showlrc: false,            music: {              title: "Tell Your World",              author: "livetune,初音ミク",              url: "/images/livetune,DECO27,初音ミク - Tell Your World.mp3",              pic: "/images/tellyourworld.png",              lrc: ""            }          });          window.aplayers || (window.aplayers = []);          window.aplayers.push(ap);        </script>]]></content>
       
     </entry>
     

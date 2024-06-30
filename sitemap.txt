@@ -4,8 +4,8 @@ http://snowmiku-home.top/2024/06/01/about/author-intro/
 http://snowmiku-home.top/music/index.html
 http://snowmiku-home.top/contact/index.html
 http://snowmiku-home.top/
+http://snowmiku-home.top/tags/UpdateLog/
 http://snowmiku-home.top/tags/Aboutme/
 http://snowmiku-home.top/tags/Technology/
-http://snowmiku-home.top/tags/UpdateLog/
-http://snowmiku-home.top/categories/Introduction/
 http://snowmiku-home.top/categories/Technologies/
+http://snowmiku-home.top/categories/Introduction/
