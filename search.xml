@@ -78,7 +78,7 @@
       <link href="/music/index.html"/>
       <url>/music/index.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><p>在VOCALOID的海洋中起舞吧！</p><blockquote><p>由于APlayer近期出现的解析错误问题，在线音乐功能将于插件恢复后更新</p></blockquote>        <div id="aplayer-TZcNGRPN" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">            <pre class="aplayer-lrc-content"></pre>        </div>        <script>          var ap = new APlayer({            element: document.getElementById("aplayer-TZcNGRPN"),            narrow: false,            autoplay: false,            showlrc: false,            music: {              title: "Tell Your World",              author: "livetune,初音ミク",              url: "/images/livetune,DECO27,初音ミク - Tell Your World.mp3",              pic: "/images/tellyourworld.png",              lrc: ""            }          });          window.aplayers || (window.aplayers = []);          window.aplayers.push(ap);        </script>]]></content>
+        <content type="html"><![CDATA[<h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><blockquote><p>注意：本站已上线页内播放器插件，支持在不同界面之间实现连续播放。<br>即便如此，该页面仍然保留，但此处的播放器与页内的播放插件并不互通。</p></blockquote><p>这是葱酱5年来收集的VOCALOID歌单！希望大家喜欢~<br>在Miku与V家的世界中起舞吧！</p>    <div id="aplayer-iypKBBBD" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="6614644804" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="true" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>可以收藏葱酱的歌单哦~一起听歌就是共享心跳！–<a href="https://music.163.com/#/my/m/music/playlist?id=661464480">点击跳转</a></p>]]></content>
       
     </entry>
     
@@ -90,6 +90,17 @@
       <url>/contact/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="\assets\css\APlayer.min.css"><script src="\assets\js\APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="联系和赞助葱酱"><a href="#联系和赞助葱酱" class="headerlink" title="联系和赞助葱酱"></a>联系和赞助葱酱</h1><h2 id="联系"><a href="#联系" class="headerlink" title="联系"></a>联系</h2><p>你可通过电子邮件、X、Telegram与我取得联系。</p><ul><li>电子邮件：<a href="mailto:&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;">&#49;&#51;&#53;&#x32;&#x32;&#49;&#56;&#x33;&#x39;&#56;&#97;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#46;&#x63;&#x6f;&#109;</a></li><li>X：<a href="https://x.com/18650LoveMiku">点击进入主页</a></li><li>Telegram：请保存并识别二维码<br><img src="/images/qr_tg.jpg" alt="Telegram"></li></ul><h2 id="赞助和支持"><a href="#赞助和支持" class="headerlink" title="赞助和支持"></a>赞助和支持</h2><p>如果你愿意支持我的项目，可以通过微信赞赏功能进行赞助。<br>赞助可以使葱酱的项目进展更顺利，葱酱衷心地感谢无论大小的每一笔赞助。<strong>但请注意，赞助不是必需行为，必须在自身的范围之内量力而行。</strong><br><img src="/images/qr_w.jpg" alt="赞赏码"></p><hr>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>更新日志</title>
+      <link href="/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/index.html"/>
+      <url>/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/index.html</url>
+      
+        <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>这个页面记载了博客从建立至今的维护记录，以及每一步涉及到的技术内容。我将这篇帖子从单独的博文设置为固定的一个页面，供想要创建博客的大家参考和学习！</p><h1 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h1><h2 id="2024-8-2"><a href="#2024-8-2" class="headerlink" title="2024-8-2"></a>2024-8-2</h2><ul><li>评论区迁移成功、开启评论区图片发送功能及后台消息提示</li><li>更新了音乐播放器</li><li>更新了一些页面效果和图片</li><li>更新了音乐播放器</li></ul><p>参考文献：</p><ul><li>音乐播放器部署教程：<a href="https://blog.csdn.net/ygxyvip/article/details/136247843">https://blog.csdn.net/ygxyvip/article/details/136247843</a></li><li>评论区与邮件收发配置：<a href="https://zhuanlan.zhihu.com/p/673016933">https://zhuanlan.zhihu.com/p/673016933</a></li></ul><h2 id="2024-6-8"><a href="#2024-6-8" class="headerlink" title="2024-6-8"></a>2024-6-8</h2><p>开放评论区</p><h2 id="2024-6-1"><a href="#2024-6-1" class="headerlink" title="2024-6-1"></a>2024-6-1</h2><p>网站正式成立并公开域名<br>参考文献：</p><ul><li>Markdown使用教程： <a href="https://blog.csdn.net/qq_40818172/article/details/126260661">https://blog.csdn.net/qq_40818172/article/details/126260661</a></li><li>Butterfly主题配置教程：<a href="https://blog.csdn.net/JesseXW/article/details/135649752">https://blog.csdn.net/JesseXW/article/details/135649752</a></li><li>个人博客的搭建：<a href="https://blog.csdn.net/weixin_46175201/article/details/133269724">https://blog.csdn.net/weixin_46175201/article/details/133269724</a></li><li>Cloudflare部署：<a href="https://zhuanlan.zhihu.com/p/610756804">https://zhuanlan.zhihu.com/p/610756804</a></li></ul>]]></content>
       
     </entry>
     
