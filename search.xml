@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>速记——用Python实现的正则表达式</title>
+      <link href="/2024/09/01/%E9%80%9F%E8%AE%B0%E2%80%94%E2%80%94%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
+      <url>/2024/09/01/%E9%80%9F%E8%AE%B0%E2%80%94%E2%80%94%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="正则表达式简介"><a href="#正则表达式简介" class="headerlink" title="正则表达式简介"></a>正则表达式简介</h1><p>‌正则表达式（‌Regular Expression，简称‌regex）是一种强大的文本处理工具，用于描述、匹配一系列符合特定规则的字符串。它通过使用普通字符和特殊字符（称为元字符）的组合，来定义一个文本模式，从而实现对字符串的搜索、替换等操作。正则表达式在计算机科学中有着广泛的应用，几乎所有现代编程语言都支持正则表达式的使用，包括但不限于‌Java、‌JavaScript、‌Python等。</p><h1 id="正则表达式在-Python-中的基本应用"><a href="#正则表达式在-Python-中的基本应用" class="headerlink" title="正则表达式在 Python 中的基本应用"></a>正则表达式在 Python 中的基本应用</h1><p>使用正则表达式，首先需要引入一个包<code>re</code>。<br>Python中，正则表达式的匹配方法分为三种，分别为<code>match</code>，<code>search</code>，<code>findall</code>。以上的方法都接收两个参数，第一个为需要匹配的字符串或正则表达式，第二个为目标字符串。</p><p><strong>match方法</strong>：从头开始匹配，匹配一次。若目标字符串的开头没有与表达式匹配的元素，返回<code>None</code>。<br><strong>search方法</strong>：从头开始寻找，当查询到第一个符合的位置时，返回找到的元素并停止。<br><strong>findall方法</strong>：查找所有匹配的元素，并全部返回。</p><h1 id="正则表达式的语法"><a href="#正则表达式的语法" class="headerlink" title="正则表达式的语法"></a>正则表达式的语法</h1><h2 id="单字符的规则"><a href="#单字符的规则" class="headerlink" title="单字符的规则"></a>单字符的规则</h2><p>以下组合均代表一个字符。</p><ul><li><code>.</code>：代表任意的字符，其中<code>\.</code>代表点本身。</li><li><code>[]</code>：代表属于括号内范围的字符，其中若表示区间，用“-”表示，不同字符之间不带空格。比如<code>[1-7a-dA-Z]</code>。</li><li><code>\d</code>：表示数字0-9。</li><li><code>\D</code>：表示非数字。</li><li><code>\s</code>：表示空白（空格或Tab）。</li><li><code>\S</code>：表示非空白。</li><li><code>\w</code>：表示单词字符（大小写，数字和下划线）</li><li><code>\W</code>：表示非单词字符。</li></ul><p>注意，由于反斜杠在字符串中代表转义字符，因此在代码中需要用“r”来取消对转义字符的识别，示例如下。</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">s = <span class="string">&#x27;abcdefg1&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(<span class="string">r&#x27;^[a-g]+\d$&#x27;</span>))</span><br></pre></td></tr></table></figure><h2 id="字符长度限制规则"><a href="#字符长度限制规则" class="headerlink" title="字符长度限制规则"></a>字符长度限制规则</h2><p>以下表达式表示了对前者字符数量的限制：</p><ul><li><code>*</code>：表示0到无数个</li><li><code>+</code>：表示1到无数个</li><li><code>?</code>：表示0或1个</li><li><code>&#123;m&#125;</code>：表示该字符只能出现m次</li><li><code>&#123;m,&#125;</code>：表示该字符最少出现m次</li><li><code>&#123;m,n&#125;</code>：表示出现m到n次（其中包含n）</li></ul><blockquote><p>需要注意的是，正则的语法中，对空格的限制较为严格，如上述的表达式<code>&#123;m,n&#125;</code>，不能出现任何空格，否则匹配无效。</p></blockquote><h2 id="边界限制"><a href="#边界限制" class="headerlink" title="边界限制"></a>边界限制</h2><p>以下表达式限制了字段的边界，即规定查询整个字符串还是字符串的子串。</p><ul><li><code>^</code>：表示字符串开头</li><li><code>$</code>：表示字符串结尾</li><li><code>\b</code>：表示单词边界</li><li><code>\B</code>：表示非单词边界</li></ul><h2 id="分组和选择"><a href="#分组和选择" class="headerlink" title="分组和选择"></a>分组和选择</h2><ul><li><code>()</code>：表示这是一个单独的字符串分组，在父级表达式中视作一个字符</li><li><code>|</code>：在括号内使用，表示“或”。</li></ul><h1 id="应用实例"><a href="#应用实例" class="headerlink" title="应用实例"></a>应用实例</h1><p><strong>题目：</strong>用正则表达式判定一个字符串是QQ号，长度为5-11位，第一位不能为0.<br><strong>代码</strong>：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">s = <span class="string">&#x27;12345678&#x27;</span></span><br><span class="line">r = <span class="string">r&#x27;^[1-9][0-9]&#123;4,10&#125;$&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(r, s))</span><br></pre></td></tr></table></figure><p><strong>题目：</strong>用正则表达式判定一个字符串是电子邮件，电子邮件的规范为<code>xxx[.xxx.xxx]@xxx[.xxx.xxx].xxx</code><br><strong>代码</strong>：</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> re</span><br><span class="line">s = <span class="string">&#x27;1352218398a@gmail.com&#x27;</span></span><br><span class="line">r = <span class="string">r&#x27;(^\w+(\.\w+)*@(qq|gmail|163)(\.\w+)$)&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(re.<span class="keyword">match</span>(r, s))</span><br></pre></td></tr></table></figure><p>代码返回的结果如下：<br><code>&lt;re.Match object; span=(0, 21), match=&#39;1352218398a@gmail.com&#39;&gt;</code></p><p>这个代码中，<code>\w+</code>表示至少一个单词字符，<code>(\.\w+)*</code>表示可以存在由点号和至少一个字符组成的后缀，<code>(qq|gmail|163)</code>表示可选三种字段中的任意一个。<br>注意：<code>findall()</code>方法会将每一个分组列出，对于存在多个分组的表达式，应选择<code>match</code>方法，并且在表达式两边加上括号。</p><p><em>（润啦，最近的Python基础告一段落！）</em></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> 学习笔记 </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Python </tag>
+            
+            <tag> 正则表达式 </tag>
+            
+            <tag> 字符匹配 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>MySQL基础学习--SQL语法</title>
       <link href="/2024/08/30/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-SQL%E8%AF%AD%E6%B3%95/"/>
       <url>/2024/08/30/MySQL%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0-SQL%E8%AF%AD%E6%B3%95/</url>
