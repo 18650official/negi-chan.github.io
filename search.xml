@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>【AList】解决上传大文件返回错误413问题</title>
+      <link href="/2024/09/17/%E3%80%90AList%E3%80%91%E8%A7%A3%E5%86%B3%E4%B8%8A%E4%BC%A0%E5%A4%A7%E6%96%87%E4%BB%B6%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF413%E9%97%AE%E9%A2%98/"/>
+      <url>/2024/09/17/%E3%80%90AList%E3%80%91%E8%A7%A3%E5%86%B3%E4%B8%8A%E4%BC%A0%E5%A4%A7%E6%96%87%E4%BB%B6%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF413%E9%97%AE%E9%A2%98/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h1><p>本人搭建的AList网盘（基于阿里云服务器和腾讯云COS对象存储）最近遇到了一些问题，在上传大约10MB的电子书时，点击“上传”按钮并加载文件，前端界面的进度条跑满，文件被提交到服务器，但提交地文件并没有按预期后台上传到腾讯云COS端，而是返回了一个错误：<code>Request Error 413</code>。</p><h1 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h1><p>经过查询手册，该问题的来源为使用的反向代理（即Nginx）限制了上传文件的最大大小限制，导致文件上传不成功，修改Nginx配置文件即可。</p><h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><h2 id="找到配置文件"><a href="#找到配置文件" class="headerlink" title="找到配置文件"></a>找到配置文件</h2><p>笔者的Nginx为手动安装，配置文件位于<code>/usr/local/nginx/conf/nginx.conf</code>，若使用apt安装，一般位于<code>/etc</code>目录下。</p><h2 id="添加内容"><a href="#添加内容" class="headerlink" title="添加内容"></a>添加内容</h2><p>在配置文件的<code>server</code>块后添加一行代码，表示限制的最大文件大小，这个<code>server</code>块为你部署AList对应的那个端口的代理。</p><figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">    listen 80<span class="comment">;</span></span><br><span class="line">    server.name snowmiku-drive.top</span><br><span class="line">    client_max_body_size 100m<span class="comment">;  # 添加到这里</span></span><br><span class="line">    location&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>保存之后，执行：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">nginx -t  <span class="comment"># 测试</span></span><br><span class="line">nginx -s reload  <span class="comment"># 重新加载</span></span><br></pre></td></tr></table></figure><p>再次上传文件，就可以成功提交并正常后台上传了。<br><img src="https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/%E5%B1%8F%E5%B9%95%E6%88%AA%E5%9B%BE%202024-09-17%20171334.png?imageSlim" alt="1"></p><hr>]]></content>
+      
+      
+      <categories>
+          
+          <category> Technologies </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> AList </tag>
+            
+            <tag> 个人网盘 </tag>
+            
+            <tag> Nginx </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>速记——将可执行文件注册为服务</title>
       <link href="/2024/09/03/%E9%80%9F%E8%AE%B0%E2%80%94%E2%80%94%E5%B0%86%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1/"/>
       <url>/2024/09/03/%E9%80%9F%E8%AE%B0%E2%80%94%E2%80%94%E5%B0%86%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1/</url>
@@ -45,11 +74,11 @@
       
         <tags>
             
+            <tag> 个人网盘 </tag>
+            
             <tag> Linux </tag>
             
             <tag> 服务器 </tag>
-            
-            <tag> 个人网盘 </tag>
             
             <tag> 资源站 </tag>
             
@@ -171,17 +200,6 @@
     
     
     <entry>
-      <title>葱酱的秘密小窝</title>
-      <link href="/Transgender-Site/index.html"/>
-      <url>/Transgender-Site/index.html</url>
-      
-        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，您输入的密码错误。若密码未知，请联系网站管理员获取！" data-whm="抱歉, 当前文章不能被校验, 不过您还是可以看看解密后的内容。">  <script id="hbeData" type="hbeData" data-hmacdigest="593de203e58ae1aca2ed4176390521c4f113349e3d14f0616cb0e403e1e3aa83">7aea507b355c9b91d0b47a7122c84c3cb3eb3a47e84a2df602f8e1aa8a26772e3706643dfbb47ae3e457e10fe26381178a73053f3501ba351efd183f37973ec81af9e1e60cc89d0994707c18aa498b2ab38f1ab0b32d0ee70159e769aeb9f92a7bbb936fb4879e00e3b94713f5b91d920fcced673af0737f3ee0e0d28bda3e13769ce2b7d9a1ce29714a8147b5c813f7541ad76c37c79f21b60125e099c496f6badd532342b2a098c9d3720202ae43e46599a64de7802528c3c2f62c209cc9201d64f678878bcb44056f268288699afba46057c03fb393cc0554019d5c77e0127edd858f485de66d418214e33058ee5fb09c30b735f043c1a7a2234318299e884a337e0b1f5e778ba7c1de8f282050ac0a42173b579e55dbdccafd4436da457f9e1d3617b57907c76c977f04d80da96db06f966d71dbcad7aa51580e68d543a78ac020a9fc85f49e33b3cfcfab6f5c547bfadb63ef905434ad1599d11091504312e7131be8a44b7bca9e445c88072db4abf0434150006c3e7ac33dbc7fd32aa61b7481f07e4142711b78ccf799723a6c2265690c6a7afc453188b468122f9b51b6422e262b7cc08954977aa610cc60b1eebcabb0bff62e859330422fa5c7a02ea84843da0594de0e2a593e8db3252e0afec941cf72a79beef2c6561b6a28801dc6720223f44a98e9912857e9c6884b62c01f06c584c7d9878bcba089a4bdffa4d4ab4ab4dd50728c63d8b7b01df35c7ac066f91b6d96221fdf7e6b809bd4de4140255a56713734cc32e8a7986934a8401bb17c924ba7a6744d97de52518a3000fa11b593654fe096197793619fb3ef7d8ee810325fdac6bf6a0dbf1b3a82f90e1913a9e407e9b0181d59f036736a7ec2f20d741c6fd67fff429b3d3a37bef138224f79811a72cfd4cfc817235924c7a73aec4fce4d553df7b0a1b921b0dd88a8bb584930d2a01c9da954fe0ab0ea6f5410a469813e72a33b54d03543861651938f7cba3295ff0f925df7b5c0d097ec65ccae2e67cd074de037b1ad329887f53ed7c997b66088daba9144ca2adbc647852ea3a2ac55fc33d66b15dc7b06838f6e4cfa3ea11230aed8cccefb8b143ce9ae07f45849a86209a81fe158a27c89e92cbfdd5901b60f6139c0652c7cb16956c7d77ed4356eb9ad8bdb03059afcaf4a1808148824da39b28895c7b09c18e3b4828a87cda37098779022ae123a53db76e1e0c85ca29f2248ae879c610f265e61d419615fe59efe304489bbd26b0123be1fb0831371218339f9d980dcceeb0789831b16712932e1e75ed5d40ea4ec73c3e0468f104299e9a13d3753e30431242d974b8fbd4680cc886915e008980ddf378875d8f4725bde53cecdb1dd2b83aae9f7cf628f9888770e187e16829c2efc4ff327eb0674d34f927d9cc272d258e7582e89106de0e8d7b7af0c3133bb3e8a0f578e2d16890f191d0f457652940b00d442f6a8b1aa05668254fa9b6b833bdb141784eef9050a1d3bf7b832b442f7e422392a730bced34d59feee7b571072fce630</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-xray">      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">当前页面的内容已加密，请输入密码后查看！</span>      </label>      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>      </svg>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>友情链接</title>
       <link href="/friends/index.html"/>
       <url>/friends/index.html</url>
@@ -204,11 +222,11 @@
     
     
     <entry>
-      <title>音乐库</title>
-      <link href="/music/index.html"/>
-      <url>/music/index.html</url>
+      <title>葱酱的秘密小窝</title>
+      <link href="/Transgender-Site/index.html"/>
+      <url>/Transgender-Site/index.html</url>
       
-        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><blockquote><p>注意：本站已上线页内播放器插件，支持在不同界面之间实现连续播放。<br>即便如此，该页面仍然保留，但此处的播放器与页内的播放插件并不互通。</p></blockquote><p>这是葱酱5年来收集的VOCALOID歌单！希望大家喜欢~<br>在Miku与V家的世界中起舞吧！</p>    <div id="aplayer-EXRQKFiM" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="6614644804" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>可以收藏葱酱的歌单哦~一起听歌就是共享心跳！–<a href="https://music.163.com/#/my/m/music/playlist?id=661464480">点击跳转</a></p>]]></content>
+        <content type="html"><![CDATA[<div class="hbe hbe-container" id="hexo-blog-encrypt" data-wpm="抱歉，您输入的密码错误。若密码未知，请联系网站管理员获取！" data-whm="抱歉, 当前文章不能被校验, 不过您还是可以看看解密后的内容。">  <script id="hbeData" type="hbeData" data-hmacdigest="593de203e58ae1aca2ed4176390521c4f113349e3d14f0616cb0e403e1e3aa83">7aea507b355c9b91d0b47a7122c84c3cb3eb3a47e84a2df602f8e1aa8a26772e3706643dfbb47ae3e457e10fe26381178a73053f3501ba351efd183f37973ec81af9e1e60cc89d0994707c18aa498b2ab38f1ab0b32d0ee70159e769aeb9f92a7bbb936fb4879e00e3b94713f5b91d920fcced673af0737f3ee0e0d28bda3e13769ce2b7d9a1ce29714a8147b5c813f7541ad76c37c79f21b60125e099c496f6badd532342b2a098c9d3720202ae43e46599a64de7802528c3c2f62c209cc9201d64f678878bcb44056f268288699afba46057c03fb393cc0554019d5c77e0127edd858f485de66d418214e33058ee5fb09c30b735f043c1a7a2234318299e884a337e0b1f5e778ba7c1de8f282050ac0a42173b579e55dbdccafd4436da457f9e1d3617b57907c76c977f04d80da96db06f966d71dbcad7aa51580e68d543a78ac020a9fc85f49e33b3cfcfab6f5c547bfadb63ef905434ad1599d11091504312e7131be8a44b7bca9e445c88072db4abf0434150006c3e7ac33dbc7fd32aa61b7481f07e4142711b78ccf799723a6c2265690c6a7afc453188b468122f9b51b6422e262b7cc08954977aa610cc60b1eebcabb0bff62e859330422fa5c7a02ea84843da0594de0e2a593e8db3252e0afec941cf72a79beef2c6561b6a28801dc6720223f44a98e9912857e9c6884b62c01f06c584c7d9878bcba089a4bdffa4d4ab4ab4dd50728c63d8b7b01df35c7ac066f91b6d96221fdf7e6b809bd4de4140255a56713734cc32e8a7986934a8401bb17c924ba7a6744d97de52518a3000fa11b593654fe096197793619fb3ef7d8ee810325fdac6bf6a0dbf1b3a82f90e1913a9e407e9b0181d59f036736a7ec2f20d741c6fd67fff429b3d3a37bef138224f79811a72cfd4cfc817235924c7a73aec4fce4d553df7b0a1b921b0dd88a8bb584930d2a01c9da954fe0ab0ea6f5410a469813e72a33b54d03543861651938f7cba3295ff0f925df7b5c0d097ec65ccae2e67cd074de037b1ad329887f53ed7c997b66088daba9144ca2adbc647852ea3a2ac55fc33d66b15dc7b06838f6e4cfa3ea11230aed8cccefb8b143ce9ae07f45849a86209a81fe158a27c89e92cbfdd5901b60f6139c0652c7cb16956c7d77ed4356eb9ad8bdb03059afcaf4a1808148824da39b28895c7b09c18e3b4828a87cda37098779022ae123a53db76e1e0c85ca29f2248ae879c610f265e61d419615fe59efe304489bbd26b0123be1fb0831371218339f9d980dcceeb0789831b16712932e1e75ed5d40ea4ec73c3e0468f104299e9a13d3753e30431242d974b8fbd4680cc886915e008980ddf378875d8f4725bde53cecdb1dd2b83aae9f7cf628f9888770e187e16829c2efc4ff327eb0674d34f927d9cc272d258e7582e89106de0e8d7b7af0c3133bb3e8a0f578e2d16890f191d0f457652940b00d442f6a8b1aa05668254fa9b6b833bdb141784eef9050a1d3bf7b832b442f7e422392a730bced34d59feee7b571072fce630</script>  <div class="hbe hbe-content">    <div class="hbe hbe-input hbe-input-xray">      <input class="hbe hbe-input-field hbe-input-field-xray" type="password" id="hbePass">      <label class="hbe hbe-input-label hbe-input-label-xray" for="hbePass">        <span class="hbe hbe-input-label-content hbe-input-label-content-xray">当前页面的内容已加密，请输入密码后查看！</span>      </label>      <svg class="hbe hbe-graphic hbe-graphic-xray" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">        <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"></path>        <path d="M0,2.5c0,0,298.666,0,399.333,0C448.336,2.5,513.994,13,597,13c77.327,0,135-10.5,200.999-10.5c95.996,0,402.001,0,402.001,0"></path>      </svg>    </div>  </div></div><script data-pjax src="/lib/hbe.js"></script><link href="/css/hbe.style.css" rel="stylesheet" type="text/css">]]></content>
       
     </entry>
     
@@ -220,6 +238,17 @@
       <url>/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97/index.html</url>
       
         <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>这个页面记载了博客从建立至今的维护记录，以及每一步涉及到的技术内容。我将这篇帖子从单独的博文设置为固定的一个页面，供想要创建博客的大家参考和学习！</p><h1 id="更新记录"><a href="#更新记录" class="headerlink" title="更新记录"></a>更新记录</h1><h2 id="2024-9-16"><a href="#2024-9-16" class="headerlink" title="2024-9-16"></a>2024-9-16</h2><ul><li>添加了页面加密功能</li><li>增设内站，用于存放一些不便于向全网开放的内容。</li><li>进行了一些UI优化，在部分选项卡前添加了易于理解的 Font Awesome 图标。</li><li>对下载站进行了一些调整和优化。</li></ul><p>参考文献：<br><strong>AList添加底部备案信息：</strong><a href="https://github.com/alist-org/alist/discussions/2756">https://github.com/alist-org/alist/discussions/2756</a><br><strong>Hexo文章和页面加密：</strong><a href="https://www.itfanr.cc/2021/04/16/hexo-blog-article-encryption/">https://www.itfanr.cc/2021/04/16/hexo-blog-article-encryption/</a><br><strong>Font Awesome图标相关：</strong><a href="https://www.runoob.com/font-awesome/fontawesome-icons-gender.html">https://www.runoob.com/font-awesome/fontawesome-icons-gender.html</a></p><h2 id="2024-9-14"><a href="#2024-9-14" class="headerlink" title="2024-9-14"></a>2024-9-14</h2><ul><li>对一些内容进行了调整</li><li>调整了一些UI板块的位置</li><li>资源站域名正式上线，可在顶栏的<code>资源-&gt;下载站</code>选项卡进入此界面。</li></ul><h2 id="2024-9-3"><a href="#2024-9-3" class="headerlink" title="2024-9-3"></a>2024-9-3</h2><ul><li>启用了资源站，部署在Aliyun服务器</li></ul><p>以上更新细节和参考文献发布在<code>Technologies</code>分支下的<a href="http://snowmiku-home.top/2024/09/01/%E6%9B%B4%E6%96%B0%E6%97%A5%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAAlist%E7%BD%91%E7%9B%98%E9%A1%B5%E9%9D%A2/">更新日志</a>博文内，在此不再赘述。</p><h2 id="2024-8-17"><a href="#2024-8-17" class="headerlink" title="2024-8-17"></a>2024-8-17</h2><ul><li>在“小说”等长篇文字贴文中引入AI朗读功能（测试阶段）</li><li>修复了音乐播放器及部分链接的问题</li></ul><p>参考文献：<br>Azure AI的学生账号申请与注册：<a href="https://blog.csdn.net/chenjambo/article/details/129783819">https://blog.csdn.net/chenjambo/article/details/129783819</a><br>Azure TTS使用概述：<a href="https://zhuanlan.zhihu.com/p/691333721">https://zhuanlan.zhihu.com/p/691333721</a><br>【官方】Azure语音使用文档：<a href="https://learn.microsoft.com/en-us/azure/ai-services/speech-service/get-started-text-to-speech?tabs=windows,terminal&amp;pivots=programming-language-csharp">https://learn.microsoft.com/en-us/azure/ai-services/speech-service/get-started-text-to-speech?tabs=windows%2Cterminal&amp;pivots=programming-language-csharp</a><br>Hexo Tag Aplayer 通过URL添加乐和播放列表：<a href="https://blog.csdn.net/qq_27489877/article/details/140648771">https://blog.csdn.net/qq_27489877/article/details/140648771</a></p><h2 id="2024-8-2"><a href="#2024-8-2" class="headerlink" title="2024-8-2"></a>2024-8-2</h2><ul><li>评论区迁移成功、开启评论区图片发送功能及后台消息提示</li><li>更新了音乐播放器</li><li>更新了一些页面效果和图片</li><li>更新了音乐播放器</li></ul><p>参考文献：</p><ul><li>音乐播放器部署教程：<a href="https://blog.csdn.net/ygxyvip/article/details/136247843">https://blog.csdn.net/ygxyvip/article/details/136247843</a></li><li>评论区与邮件收发配置：<a href="https://zhuanlan.zhihu.com/p/673016933">https://zhuanlan.zhihu.com/p/673016933</a></li><li>Butterfly 主题进阶配置：<a href="https://blog.csdn.net/mjh1667002013/article/details/129290903">https://blog.csdn.net/mjh1667002013/article/details/129290903</a></li></ul><h2 id="2024-6-8"><a href="#2024-6-8" class="headerlink" title="2024-6-8"></a>2024-6-8</h2><p>开放评论区</p><h2 id="2024-6-1"><a href="#2024-6-1" class="headerlink" title="2024-6-1"></a>2024-6-1</h2><p>网站正式成立并公开域名<br>参考文献：</p><ul><li>Markdown使用教程： <a href="https://blog.csdn.net/qq_40818172/article/details/126260661">https://blog.csdn.net/qq_40818172/article/details/126260661</a></li><li>Butterfly主题配置教程：<a href="https://blog.csdn.net/JesseXW/article/details/135649752">https://blog.csdn.net/JesseXW/article/details/135649752</a></li><li>个人博客的搭建：<a href="https://blog.csdn.net/weixin_46175201/article/details/133269724">https://blog.csdn.net/weixin_46175201/article/details/133269724</a></li><li>Cloudflare部署：<a href="https://zhuanlan.zhihu.com/p/610756804">https://zhuanlan.zhihu.com/p/610756804</a></li></ul>]]></content>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>音乐库</title>
+      <link href="/music/index.html"/>
+      <url>/music/index.html</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="Live"><a href="#Live" class="headerlink" title="Live"></a>Live</h1><blockquote><p>注意：本站已上线页内播放器插件，支持在不同界面之间实现连续播放。<br>即便如此，该页面仍然保留，但此处的播放器与页内的播放插件并不互通。</p></blockquote><p>这是葱酱5年来收集的VOCALOID歌单！希望大家喜欢~<br>在Miku与V家的世界中起舞吧！</p>    <div id="aplayer-ZFGWkYiu" class="aplayer aplayer-tag-marker meting-tag-marker"         data-id="6614644804" data-server="netease" data-type="playlist" data-mode="circulation" data-autoplay="false" data-mutex="false" data-listmaxheight="400px" data-preload="none" data-theme="#ad7a86"    ></div><p>可以收藏葱酱的歌单哦~一起听歌就是共享心跳！–<a href="https://music.163.com/#/my/m/music/playlist?id=661464480">点击跳转</a></p>]]></content>
       
     </entry>
     
