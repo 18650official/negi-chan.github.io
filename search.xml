@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>【项目记录贴】基于STM32的智能盲人导引设备</title>
+      <link href="/2025/06/24/post-2025624/"/>
+      <url>/2025/06/24/post-2025624/</url>
+      
+        <content type="html"><![CDATA[<link rel="stylesheet" class="aplayer-secondary-style-marker" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-secondary-script-marker"></script><script class="meting-secondary-script-marker" src="\assets\js\Meting.min.js"></script><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个项目大纲存放贴，目的是理清学校“科研训练”中的“盲人导引”项目的技术细节和开发迭代进度，也是一个完整的嵌入式开发小项目的实现案例，包括从确定功能，选择器件，编写代码到实际的设计电路、制作PCB和最小可行实例（MVP），希望可供大家参考。</p><h1 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h1><h2 id="功能要求"><a href="#功能要求" class="headerlink" title="功能要求"></a>功能要求</h2><p>对于针对盲人的导引设备，应该适合用户视力障碍的特性，需要使用传感器、语音提示、路径规划和物联网等技术实现警示、导引避障、报警等辅助功能，具体的功能要求如下：</p><ul><li><strong>警示灯</strong>：自动检测光强，当环境光线较低或者用户主动双击按键时，点亮警示灯并且闪烁，提醒人行道上的路人注意避让。</li><li><strong>语音指引</strong>：通过HC-SR04 距离传感器测量距离，当距离小于一定大小时，通过串口TTS模块发出提示。在实现此功能的情况下，考虑增设两个左右各75度方向的超声波或TOF激光测距传感器，实现在检测到障碍的情况下判断路况并指导盲人转向，直到前方障碍物消失。</li><li><strong>定位和报警</strong>：通过GPS模块来确定经纬度，GSM模块负责发送信息。用户需要预先设定紧急联系人列表，当用户长按按键，或者MPU6050加速度传感器检测到过大的加速度且在一段时间之内未按键取消时，发出报警提示音并发送附带位置信息的报警短信（可以直接通过地图软件打开这个位置）。</li><li><strong>其他</strong>：包含电源管理，多语言，以及触感导引（通过舵机和震动电机来实现提示和转向引导，适合听力存在障碍的用户）</li></ul><h2 id="需要准备的元器件"><a href="#需要准备的元器件" class="headerlink" title="需要准备的元器件"></a>需要准备的元器件</h2><h3 id="主控"><a href="#主控" class="headerlink" title="主控"></a>主控</h3><p><strong>STM32F103C8T6 最小系统板</strong>：STM32单片机具有低功耗，高性能，资源丰富等特点。由于该设备的语音、GSM、GPS三个模块均需要使用UART通信，且其他传感器也需要实时性较高的I2C、SPI通信，使用硬件外设接口丰富的STM32是最佳选择。<br><img src="https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/undefinedstm.jfif" alt="STM32"></p><h3 id="传感器"><a href="#传感器" class="headerlink" title="传感器"></a>传感器</h3><p><strong>C78960 数字环境光传感器</strong>：这是一个自带光敏传感器、A-D转换电路和I2C Bus的数字光线传感器，可以通过I2C数字总线接口读取光照强度，以此判断是否需要点亮警示灯。<br><img src="https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/undefinedc78960.png" alt="C78960"></p><p><strong>MPU6050 加速度传感器</strong>：这是一个比较常用的IMU设备，可以实时测量坐标系下三个方向的加速度（acc）和角速度（gyro）。通过加速度传感器，可以判断是否发生跌倒、碰撞等情况，并启动紧急报警。<br><strong>HC-SR04 超声波测距传感器</strong>：可以通过声波发送和接收的时间差判断前方物体的距离，可以用于确定前方的障碍物。<br><strong>实体按键</strong>：使用一个面积较大，突起明显、寿命长的机械按键作为唯一的用户输入设备，通过不同的按键方式来选择功能，降低用户的学习成本，方便使用。<br><strong>ATK-1218 定位模块</strong>：可以通过GPS和北斗进行定位，并且通过串行接口发送经纬度，用于确定当前用户所处的位置。</p><h3 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h3><p><strong>蜂鸣器、LED</strong>：用于发出响声和警报光线。<br><strong>GA-68 通信模块</strong>：可以连接2G移动网络并接收AT指令发送短信，实现短信求助和报警。<br><strong>Serial TTS 文字转语音模块</strong>：可以将文字提示转换为语音输出，以提示盲人相关信息。</p><h3 id="附件"><a href="#附件" class="headerlink" title="附件"></a>附件</h3><p><strong>锂离子电池</strong>：使用3000mAh 18650可拆卸锂离子电池，既可以保障长时间的续航，又方便用户随时更换。<br><strong>电源管理模块</strong>：使用TP4056进行电池的放电管理和充电保护，使用现代的<strong>Type-C</strong>接口连接电源，兼容各种充电器。</p><h2 id="功能实现逻辑"><a href="#功能实现逻辑" class="headerlink" title="功能实现逻辑"></a>功能实现逻辑</h2><p>首先，用户按下按键，设备的各个外设初始化，STM32通过串口向TTS模块发送信息“开机”。<br>程序中，通过定时器中断，每1s向C78960发送读数据请求，通过I2C协议读取当前的光照强度，通过实际测量的数据，我们可以确定一个“能见度较低”的光照强度阈值，当测量的强度低于该阈值（或用户双击按钮）时，语音提示“指示灯开启”，红色LED将按照一定频率闪烁，直到光线恢复或用户再次双击按键（按照唤起闪烁的方式决定），关闭LED的闪烁。<br>拐杖的中下部约30厘米处安装一个通过3D打印制作的传感器模组框架，固定正前方、左侧75度和右侧75度三个超声波传感器，模拟一般视野的可见范围。在正常行走时，程序每0.5秒通过TRIG接口发送测量请求，使用一个空置Timer测量接收到的ECHO信号长度，并通过算法转换为长度。当长度小于一定大小（2m）时，蜂鸣器会由慢到快地响铃，并且语音模块提示“发现障碍物”。<br>在此状态下，STM32会轮流扫描左、右、中三个传感器的数据，寻找左、右侧的可行性，当某侧的距离可判定为“无穷大”或“大于安全距离”时，会提示用户朝这个方向转弯，直到中间的传感器不再探测到障碍物。判断的逻辑如下：</p><table><thead><tr><th>左侧</th><th>中间</th><th>右侧</th><th>提示</th></tr></thead><tbody><tr><td>大于阈值</td><td>小于阈值</td><td>大于阈值</td><td>默认右转弯</td></tr><tr><td>小于阈值</td><td>小于阈值</td><td>大于阈值</td><td>右转弯</td></tr><tr><td>大于阈值</td><td>小于阈值</td><td>小于阈值</td><td>小心向左转</td></tr><tr><td>小于阈值</td><td>小于阈值</td><td>小于阈值</td><td>此路不通，请手动探测</td></tr><tr><td>任意</td><td>大于阈值</td><td>任意</td><td>请直行</td></tr></tbody></table><p>主控每0.3s会通过硬件SPI接口检测MPU6050传感器的加速度信息，一般而言，加速度在不受外力的情况下，矢量合力向下，大小为重力加速度。通过三维坐标系的勾股定理，可以计算出合加速度的大小。系统维护一个长度较小的滤波窗口，并对每次接收的加速度大小进行差分，一旦加速度的变化率过大，系统就会触发“预报警模式”。<br>考虑到触发此模式时，可能是因为不慎掉落，也可能是用户已经因受伤或视力问题无法行动，语音模块会先发出“您安全吗？如果安全请在10秒内按下按键”的提示音，如果用户没有按下按键，计时结束后，会触发短信报警模式。（在一般状态下，长按5秒以上也可以直接触发报警模式）<br>报警时，系统通过GPS模块进行定位，将信息进行打包，使其成为可以被直接从地图打开的形式（URL Scheme）：</p><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我遇到了紧急状况，需要你的帮助！下面的地址是我现在的位置：</span><br><span class="line">https://uri.amap.com/marker?position=116.397470,39.908823&amp;name=我的位置</span><br></pre></td></tr></table></figure><p>系统内预先设定联系人列表，通过串口指令可进行增删改查。<br>在位置确定后，STM32通过AT指令与GSM模块通信，逐个发送求助短信。并且不断发出蜂鸣声和最大音量的“我需要帮助”提示音，直到再次按下按钮。</p><p>以上是系统的初版程序逻辑。</p><h1 id="项目设计"><a href="#项目设计" class="headerlink" title="项目设计"></a>项目设计</h1><h2 id="外壳"><a href="#外壳" class="headerlink" title="外壳"></a>外壳</h2><p>设想采用钢管&#x2F;塑料管搭配反光条作为拐杖主体，传感器固定在拐杖中部，主机、电池等集成在一块主板上，固定在拐杖上方。把持部分使用类似于“自行车龙头”的设计，以保证传感器方向始终向前，且该结构还可以方便的进行升级改造，加入震动导引等含有方向+触感的功能。<br>按钮安装在龙头前部，设计为阻尼较大的机械按键，以防止误触，指示灯安装在主机前端和后端，并加匀光罩，可以使周围行人和车辆发现。<br><em>3D结构图待设计</em></p><h2 id="电路"><a href="#电路" class="headerlink" title="电路"></a>电路</h2><p><em>待补充</em></p><h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p><em>待补充</em></p><h2 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h2><p><em>待补充</em></p><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><em>待补充</em></p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> STM32 </tag>
+            
+            <tag> Technologies </tag>
+            
+            <tag> 无障碍 </tag>
+            
+            <tag> 项目记录 </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>【教程】使用树莓派和CUPS部署远程打印服务</title>
       <link href="/2025/06/16/post-2025616/"/>
       <url>/2025/06/16/post-2025616/</url>

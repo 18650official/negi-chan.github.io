@@ -1,0 +1,328 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【项目记录贴】基于STM32的智能盲人导引设备 | 葱酱的幻想乡 - Snowmiku's Dreamland</title><meta name="author" content="Snowmiku"><meta name="copyright" content="Snowmiku"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言这是一个项目大纲存放贴，目的是理清学校“科研训练”中的“盲人导引”项目的技术细节和开发迭代进度，也是一个完整的嵌入式开发小项目的实现案例，包括从确定功能，选择器件，编写代码到实际的设计电路、制作PCB和最小可行实例（MVP），希望可供大家参考。 项目概述功能要求对于针对盲人的导引设备，应该适合用户视力障碍的特性，需要使用传感器、语音提示、路径规划和物联网等技术实现警示、导引避障、报警等辅助功能">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【项目记录贴】基于STM32的智能盲人导引设备">
+<meta property="og:url" content="http://snowmiku-home.top/2025/06/24/post-2025624/index.html">
+<meta property="og:site_name" content="葱酱的幻想乡 - Snowmiku&#39;s Dreamland">
+<meta property="og:description" content="前言这是一个项目大纲存放贴，目的是理清学校“科研训练”中的“盲人导引”项目的技术细节和开发迭代进度，也是一个完整的嵌入式开发小项目的实现案例，包括从确定功能，选择器件，编写代码到实际的设计电路、制作PCB和最小可行实例（MVP），希望可供大家参考。 项目概述功能要求对于针对盲人的导引设备，应该适合用户视力障碍的特性，需要使用传感器、语音提示、路径规划和物联网等技术实现警示、导引避障、报警等辅助功能">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://snowmiku-home.top/images/icon2.jpg">
+<meta property="article:published_time" content="2025-06-24T04:08:31.000Z">
+<meta property="article:modified_time" content="2025-06-24T05:57:42.342Z">
+<meta property="article:author" content="Snowmiku">
+<meta property="article:tag" content="STM32">
+<meta property="article:tag" content="Technologies">
+<meta property="article:tag" content="无障碍">
+<meta property="article:tag" content="项目记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://snowmiku-home.top/images/icon2.jpg"><link rel="shortcut icon" href="/images/icon_small.png"><link rel="canonical" href="http://snowmiku-home.top/2025/06/24/post-2025624/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【项目记录贴】基于STM32的智能盲人导引设备',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-06-24 13:57:42'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><style type="text/css"> #universe {  display: block; position: fixed; margin: 0; padding: 0; border: 0; outline: 0; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; } </style><meta name="generator" content="Hexo 7.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder-open"></i><span> 资源</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐库</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.snowmiku-drive.top/"><i class="fa-fw fas fa-folder"></i><span> 下载站</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 更多信息</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/01/about/author-intro"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/friends"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/contact"><i class="fa-fw fa fa-handshake"></i><span> 联系和赞助</span></a></li><li><a class="site-page child" href="/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><i class="fa-fw fa fa-file-text"></i><span> 更新日志</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://trans.snowmiku-home.top"><i class="fa-fw fa fa-star"></i><span> 里站</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/miracle.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="葱酱的幻想乡 - Snowmiku's Dreamland"><img class="site-icon" src="/images/icon.jpg"/><span class="site-name">葱酱的幻想乡 - Snowmiku's Dreamland</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder-open"></i><span> 资源</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐库</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.snowmiku-drive.top/"><i class="fa-fw fas fa-folder"></i><span> 下载站</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 更多信息</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/01/about/author-intro"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/friends"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/contact"><i class="fa-fw fa fa-handshake"></i><span> 联系和赞助</span></a></li><li><a class="site-page child" href="/%E6%9B%B4%E6%96%B0%E6%97%A5%E5%BF%97"><i class="fa-fw fa fa-file-text"></i><span> 更新日志</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://trans.snowmiku-home.top"><i class="fa-fw fa fa-star"></i><span> 里站</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【项目记录贴】基于STM32的智能盲人导引设备</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-24T04:08:31.000Z" title="发表于 2025-06-24 12:08:31">2025-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-06-24T05:57:42.342Z" title="更新于 2025-06-24 13:57:42">2025-06-24</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【项目记录贴】基于STM32的智能盲人导引设备"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/06/24/post-2025624/#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>这是一个项目大纲存放贴，目的是理清学校“科研训练”中的“盲人导引”项目的技术细节和开发迭代进度，也是一个完整的嵌入式开发小项目的实现案例，包括从确定功能，选择器件，编写代码到实际的设计电路、制作PCB和最小可行实例（MVP），希望可供大家参考。</p>
+<h1 id="项目概述"><a href="#项目概述" class="headerlink" title="项目概述"></a>项目概述</h1><h2 id="功能要求"><a href="#功能要求" class="headerlink" title="功能要求"></a>功能要求</h2><p>对于针对盲人的导引设备，应该适合用户视力障碍的特性，需要使用传感器、语音提示、路径规划和物联网等技术实现警示、导引避障、报警等辅助功能，具体的功能要求如下：</p>
+<ul>
+<li><strong>警示灯</strong>：自动检测光强，当环境光线较低或者用户主动双击按键时，点亮警示灯并且闪烁，提醒人行道上的路人注意避让。</li>
+<li><strong>语音指引</strong>：通过HC-SR04 距离传感器测量距离，当距离小于一定大小时，通过串口TTS模块发出提示。在实现此功能的情况下，考虑增设两个左右各75度方向的超声波或TOF激光测距传感器，实现在检测到障碍的情况下判断路况并指导盲人转向，直到前方障碍物消失。</li>
+<li><strong>定位和报警</strong>：通过GPS模块来确定经纬度，GSM模块负责发送信息。用户需要预先设定紧急联系人列表，当用户长按按键，或者MPU6050加速度传感器检测到过大的加速度且在一段时间之内未按键取消时，发出报警提示音并发送附带位置信息的报警短信（可以直接通过地图软件打开这个位置）。</li>
+<li><strong>其他</strong>：包含电源管理，多语言，以及触感导引（通过舵机和震动电机来实现提示和转向引导，适合听力存在障碍的用户）</li>
+</ul>
+<h2 id="需要准备的元器件"><a href="#需要准备的元器件" class="headerlink" title="需要准备的元器件"></a>需要准备的元器件</h2><h3 id="主控"><a href="#主控" class="headerlink" title="主控"></a>主控</h3><p><strong>STM32F103C8T6 最小系统板</strong>：STM32单片机具有低功耗，高性能，资源丰富等特点。由于该设备的语音、GSM、GPS三个模块均需要使用UART通信，且其他传感器也需要实时性较高的I2C、SPI通信，使用硬件外设接口丰富的STM32是最佳选择。<br><img src="https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/undefinedstm.jfif" alt="STM32"></p>
+<h3 id="传感器"><a href="#传感器" class="headerlink" title="传感器"></a>传感器</h3><p><strong>C78960 数字环境光传感器</strong>：这是一个自带光敏传感器、A-D转换电路和I2C Bus的数字光线传感器，可以通过I2C数字总线接口读取光照强度，以此判断是否需要点亮警示灯。<br><img src="https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/undefinedc78960.png" alt="C78960"></p>
+<p><strong>MPU6050 加速度传感器</strong>：这是一个比较常用的IMU设备，可以实时测量坐标系下三个方向的加速度（acc）和角速度（gyro）。通过加速度传感器，可以判断是否发生跌倒、碰撞等情况，并启动紧急报警。<br><strong>HC-SR04 超声波测距传感器</strong>：可以通过声波发送和接收的时间差判断前方物体的距离，可以用于确定前方的障碍物。<br><strong>实体按键</strong>：使用一个面积较大，突起明显、寿命长的机械按键作为唯一的用户输入设备，通过不同的按键方式来选择功能，降低用户的学习成本，方便使用。<br><strong>ATK-1218 定位模块</strong>：可以通过GPS和北斗进行定位，并且通过串行接口发送经纬度，用于确定当前用户所处的位置。</p>
+<h3 id="执行器"><a href="#执行器" class="headerlink" title="执行器"></a>执行器</h3><p><strong>蜂鸣器、LED</strong>：用于发出响声和警报光线。<br><strong>GA-68 通信模块</strong>：可以连接2G移动网络并接收AT指令发送短信，实现短信求助和报警。<br><strong>Serial TTS 文字转语音模块</strong>：可以将文字提示转换为语音输出，以提示盲人相关信息。</p>
+<h3 id="附件"><a href="#附件" class="headerlink" title="附件"></a>附件</h3><p><strong>锂离子电池</strong>：使用3000mAh 18650可拆卸锂离子电池，既可以保障长时间的续航，又方便用户随时更换。<br><strong>电源管理模块</strong>：使用TP4056进行电池的放电管理和充电保护，使用现代的<strong>Type-C</strong>接口连接电源，兼容各种充电器。</p>
+<h2 id="功能实现逻辑"><a href="#功能实现逻辑" class="headerlink" title="功能实现逻辑"></a>功能实现逻辑</h2><p>首先，用户按下按键，设备的各个外设初始化，STM32通过串口向TTS模块发送信息“开机”。<br>程序中，通过定时器中断，每1s向C78960发送读数据请求，通过I2C协议读取当前的光照强度，通过实际测量的数据，我们可以确定一个“能见度较低”的光照强度阈值，当测量的强度低于该阈值（或用户双击按钮）时，语音提示“指示灯开启”，红色LED将按照一定频率闪烁，直到光线恢复或用户再次双击按键（按照唤起闪烁的方式决定），关闭LED的闪烁。<br>拐杖的中下部约30厘米处安装一个通过3D打印制作的传感器模组框架，固定正前方、左侧75度和右侧75度三个超声波传感器，模拟一般视野的可见范围。在正常行走时，程序每0.5秒通过TRIG接口发送测量请求，使用一个空置Timer测量接收到的ECHO信号长度，并通过算法转换为长度。当长度小于一定大小（2m）时，蜂鸣器会由慢到快地响铃，并且语音模块提示“发现障碍物”。<br>在此状态下，STM32会轮流扫描左、右、中三个传感器的数据，寻找左、右侧的可行性，当某侧的距离可判定为“无穷大”或“大于安全距离”时，会提示用户朝这个方向转弯，直到中间的传感器不再探测到障碍物。判断的逻辑如下：</p>
+<table>
+<thead>
+<tr>
+<th>左侧</th>
+<th>中间</th>
+<th>右侧</th>
+<th>提示</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>大于阈值</td>
+<td>小于阈值</td>
+<td>大于阈值</td>
+<td>默认右转弯</td>
+</tr>
+<tr>
+<td>小于阈值</td>
+<td>小于阈值</td>
+<td>大于阈值</td>
+<td>右转弯</td>
+</tr>
+<tr>
+<td>大于阈值</td>
+<td>小于阈值</td>
+<td>小于阈值</td>
+<td>小心向左转</td>
+</tr>
+<tr>
+<td>小于阈值</td>
+<td>小于阈值</td>
+<td>小于阈值</td>
+<td>此路不通，请手动探测</td>
+</tr>
+<tr>
+<td>任意</td>
+<td>大于阈值</td>
+<td>任意</td>
+<td>请直行</td>
+</tr>
+</tbody></table>
+<p>主控每0.3s会通过硬件SPI接口检测MPU6050传感器的加速度信息，一般而言，加速度在不受外力的情况下，矢量合力向下，大小为重力加速度。通过三维坐标系的勾股定理，可以计算出合加速度的大小。系统维护一个长度较小的滤波窗口，并对每次接收的加速度大小进行差分，一旦加速度的变化率过大，系统就会触发“预报警模式”。<br>考虑到触发此模式时，可能是因为不慎掉落，也可能是用户已经因受伤或视力问题无法行动，语音模块会先发出“您安全吗？如果安全请在10秒内按下按键”的提示音，如果用户没有按下按键，计时结束后，会触发短信报警模式。（在一般状态下，长按5秒以上也可以直接触发报警模式）<br>报警时，系统通过GPS模块进行定位，将信息进行打包，使其成为可以被直接从地图打开的形式（URL Scheme）：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">我遇到了紧急状况，需要你的帮助！下面的地址是我现在的位置：</span><br><span class="line">https://uri.amap.com/marker?position=116.397470,39.908823&amp;name=我的位置</span><br></pre></td></tr></table></figure>
+<p>系统内预先设定联系人列表，通过串口指令可进行增删改查。<br>在位置确定后，STM32通过AT指令与GSM模块通信，逐个发送求助短信。并且不断发出蜂鸣声和最大音量的“我需要帮助”提示音，直到再次按下按钮。</p>
+<p>以上是系统的初版程序逻辑。</p>
+<h1 id="项目设计"><a href="#项目设计" class="headerlink" title="项目设计"></a>项目设计</h1><h2 id="外壳"><a href="#外壳" class="headerlink" title="外壳"></a>外壳</h2><p>设想采用钢管&#x2F;塑料管搭配反光条作为拐杖主体，传感器固定在拐杖中部，主机、电池等集成在一块主板上，固定在拐杖上方。把持部分使用类似于“自行车龙头”的设计，以保证传感器方向始终向前，且该结构还可以方便的进行升级改造，加入震动导引等含有方向+触感的功能。<br>按钮安装在龙头前部，设计为阻尼较大的机械按键，以防止误触，指示灯安装在主机前端和后端，并加匀光罩，可以使周围行人和车辆发现。<br><em>3D结构图待设计</em></p>
+<h2 id="电路"><a href="#电路" class="headerlink" title="电路"></a>电路</h2><p><em>待补充</em></p>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p><em>待补充</em></p>
+<h2 id="PCB"><a href="#PCB" class="headerlink" title="PCB"></a>PCB</h2><p><em>待补充</em></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p><em>待补充</em></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://snowmiku-home.top">Snowmiku</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://snowmiku-home.top/2025/06/24/post-2025624/">http://snowmiku-home.top/2025/06/24/post-2025624/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://snowmiku-home.top" target="_blank">葱酱的幻想乡 - Snowmiku's Dreamland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/STM32/">STM32</a><a class="post-meta__tags" href="/tags/Technologies/">Technologies</a><a class="post-meta__tags" href="/tags/%E6%97%A0%E9%9A%9C%E7%A2%8D/">无障碍</a><a class="post-meta__tags" href="/tags/%E9%A1%B9%E7%9B%AE%E8%AE%B0%E5%BD%95/">项目记录</a></div><div class="post_share"><div class="social-share" data-image="/images/icon2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/images/qr_w.jpg" target="_blank"><img class="post-qr-code-img" src="/images/qr_w.jpg" alt="微信赞赏码"/></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2025/06/16/post-2025616/" title="【教程】使用树莓派和CUPS部署远程打印服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【教程】使用树莓派和CUPS部署远程打印服务</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon2.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Snowmiku</div><div class="author-info__description">一个水贴和存放心情的角落罢了。<br/>记得要开心呀！</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/18650official"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://t.me/mmmiku_18650" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近一次维护于 2024/9/13</br>以后的更新可以在更多信息-更新日志中查看</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">项目概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E8%A6%81%E6%B1%82"><span class="toc-number">2.1.</span> <span class="toc-text">功能要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E5%87%86%E5%A4%87%E7%9A%84%E5%85%83%E5%99%A8%E4%BB%B6"><span class="toc-number">2.2.</span> <span class="toc-text">需要准备的元器件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%8E%A7"><span class="toc-number">2.2.1.</span> <span class="toc-text">主控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E6%84%9F%E5%99%A8"><span class="toc-number">2.2.2.</span> <span class="toc-text">传感器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%A7%E8%A1%8C%E5%99%A8"><span class="toc-number">2.2.3.</span> <span class="toc-text">执行器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E4%BB%B6"><span class="toc-number">2.2.4.</span> <span class="toc-text">附件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%9F%E8%83%BD%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91"><span class="toc-number">2.3.</span> <span class="toc-text">功能实现逻辑</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.</span> <span class="toc-text">项目设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%96%E5%A3%B3"><span class="toc-number">3.1.</span> <span class="toc-text">外壳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%B5%E8%B7%AF"><span class="toc-number">3.2.</span> <span class="toc-text">电路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">程序代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PCB"><span class="toc-number">3.4.</span> <span class="toc-text">PCB</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/24/post-2025624/" title="【项目记录贴】基于STM32的智能盲人导引设备">【项目记录贴】基于STM32的智能盲人导引设备</a><time datetime="2025-06-24T04:08:31.000Z" title="发表于 2025-06-24 12:08:31">2025-06-24</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/16/post-2025616/" title="【教程】使用树莓派和CUPS部署远程打印服务">【教程】使用树莓派和CUPS部署远程打印服务</a><time datetime="2025-06-16T12:25:08.000Z" title="发表于 2025-06-16 20:25:08">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/17/%E3%80%90AList%E3%80%91%E8%A7%A3%E5%86%B3%E4%B8%8A%E4%BC%A0%E5%A4%A7%E6%96%87%E4%BB%B6%E8%BF%94%E5%9B%9E%E9%94%99%E8%AF%AF413%E9%97%AE%E9%A2%98/" title="【AList】解决上传大文件返回错误413问题">【AList】解决上传大文件返回错误413问题</a><time datetime="2024-09-17T09:00:13.000Z" title="发表于 2024-09-17 17:00:13">2024-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/03/%E9%80%9F%E8%AE%B0%E2%80%94%E2%80%94%E5%B0%86%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6%E6%B3%A8%E5%86%8C%E4%B8%BA%E6%9C%8D%E5%8A%A1/" title="速记——将可执行文件注册为服务">速记——将可执行文件注册为服务</a><time datetime="2024-09-03T06:37:04.000Z" title="发表于 2024-09-03 14:37:04">2024-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/01/%E6%9B%B4%E6%96%B0%E6%97%A5%E8%AE%B0%E2%80%94%E2%80%94%E5%9F%BA%E4%BA%8E%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAAlist%E7%BD%91%E7%9B%98%E9%A1%B5%E9%9D%A2/" title="更新日记——基于阿里云服务器搭建一个Alist网盘页面">更新日记——基于阿里云服务器搭建一个Alist网盘页面</a><time datetime="2024-09-01T14:30:50.000Z" title="发表于 2024-09-01 22:30:50">2024-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Snowmiku</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://my-twikoo-steel.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://my-twikoo-steel.vercel.app/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><canvas id="universe"></canvas><script src="/js/universe.js"></script><div class="aplayer no-destroy" data-id="6614644804" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false" data-lrcType="-1"> </div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
