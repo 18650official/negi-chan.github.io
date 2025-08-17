@@ -4028,6 +4028,24 @@ h1.page-title + .tag-cloud-list {
 #post .ads-wrap {
   margin: 40px 0;
 }
+#post .read-aloud-controls {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: box;
+  display: flex;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -o-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+  gap: 20px;
+}
+#post .read-aloud-button-style i {
+  margin-right: 5px;
+}
 .relatedPosts {
   margin-top: 40px;
 }
