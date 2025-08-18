@@ -22,63 +22,63 @@ document.addEventListener('DOMContentLoaded', function () {
   // APlayer 初始化逻辑
   // APlayer Initialization Logic
   // ===========================================
-  const initAplayer = () => {
-    // Find all aplayer containers
-    const aplayerContainers = document.querySelectorAll('.aplayer');
+  // const initAplayer = () => {
+  //   // Find all aplayer containers
+  //   const aplayerContainers = document.querySelectorAll('.aplayer');
 
-    // Iterate through each found container and initialize
-    aplayerContainers.forEach(container => {
-      if (typeof APlayer !== 'undefined') {
-        let url = container.dataset.url;
+  //   // Iterate through each found container and initialize
+  //   aplayerContainers.forEach(container => {
+  //     if (typeof APlayer !== 'undefined') {
+  //       let url = container.dataset.url;
         
-        // If data-url is not available, try to get the filename from the URL
-        if (!url) {
-          // Get the current URL pathname
-          const pathname = window.location.pathname;
+  //       // If data-url is not available, try to get the filename from the URL
+  //       if (!url) {
+  //         // Get the current URL pathname
+  //         const pathname = window.location.pathname;
           
-          // Regex to extract the filename from a URL like /2025/08/15/post-2025816/
-          const match = pathname.match(/\/(\w+-\w+)\/$/);
+  //         // Regex to extract the filename from a URL like /2025/08/15/post-2025816/
+  //         const match = pathname.match(/\/(\w+-\w+)\/$/);
           
-          if (match && match[1]) {
-            // Found filename, construct the URL
-            const filename = match[1];
-            url = `/audio/${filename}.wav`;
-            console.log('Using filename from URL to derive APlayer URL:', url);
-          } else {
-            console.error('APlayer initialization failed: data-url attribute not found and no filename could be derived from the URL. Please check your Hexo tag configuration or URL structure.');
-            return; // Skip this container
-          }
-        }
+  //         if (match && match[1]) {
+  //           // Found filename, construct the URL
+  //           const filename = match[1];
+  //           url = `/audio/${filename}.wav`;
+  //           console.log('Using filename from URL to derive APlayer URL:', url);
+  //         } else {
+  //           console.error('APlayer initialization failed: data-url attribute not found and no filename could be derived from the URL. Please check your Hexo tag configuration or URL structure.');
+  //           return; // Skip this container
+  //         }
+  //       }
 
-        const title = container.dataset.title || '有声版';
-        const author = container.dataset.author || 'Azure AI';
-        const pic = container.dataset.pic || 'https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/Screenshot_2024-08-15-00-35-26-521_com.tencent.mm.jpg?imageSlim';
+  //       const title = container.dataset.title || '有声版';
+  //       const author = container.dataset.author || 'Azure AI';
+  //       const pic = container.dataset.pic || 'https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/Screenshot_2024-08-15-00-35-26-521_com.tencent.mm.jpg?imageSlim';
 
-        new APlayer({
-          element: container,
-          narrow: false,
-          autoplay: false,
-          showlrc: false,
-          music: {
-            title: title,
-            author: author,
-            url: url,
-            pic: pic
-          }
-        });
-        console.log('APlayer successfully initialized!');
-      }
-    });
-  };
+  //       new APlayer({
+  //         element: container,
+  //         narrow: false,
+  //         autoplay: false,
+  //         showlrc: false,
+  //         music: {
+  //           title: title,
+  //           author: author,
+  //           url: url,
+  //           pic: pic
+  //         }
+  //       });
+  //       console.log('APlayer successfully initialized!');
+  //     }
+  //   });
+  // };
 
   // ===========================================
   // 确保 APlayer 在所有加载情况下都能初始化
   // ===========================================
   // 在 DOM 完全加载后调用，用于初始页面访问或刷新
-  document.addEventListener('DOMContentLoaded', initAplayer);
+  // document.addEventListener('DOMContentLoaded', initAplayer);
 
-  // 监听 PJAX 的“完成”事件，处理站内页面跳转
-  document.addEventListener('pjax:complete', initAplayer);
+  // // 监听 PJAX 的“完成”事件，处理站内页面跳转
+  // document.addEventListener('pjax:complete', initAplayer);
 
   // 初始化header
   const initAdjust = () => {
