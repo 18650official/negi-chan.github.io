@@ -1,0 +1,346 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>【教程】使用树莓派和CUPS部署远程打印服务 | 葱酱的幻想乡 - Snowmiku's Dreamland</title><meta name="author" content="Snowmiku"><meta name="copyright" content="Snowmiku"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="文章讲述作者为解决实验室老旧HP LaserJet 3055打印机无法远程打印的问题，尝试使用ESP32-S2&#x2F;S3实现远程打印，但因硬件限制导致效果不佳，最终另寻他法的故事。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【教程】使用树莓派和CUPS部署远程打印服务">
+<meta property="og:url" content="http://snowmiku-home.top/2025/06/16/post-2025616/index.html">
+<meta property="og:site_name" content="葱酱的幻想乡 - Snowmiku&#39;s Dreamland">
+<meta property="og:description" content="文章讲述作者为解决实验室老旧HP LaserJet 3055打印机无法远程打印的问题，尝试使用ESP32-S2&#x2F;S3实现远程打印，但因硬件限制导致效果不佳，最终另寻他法的故事。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://snowmiku-home.top/images/icon2.jpg">
+<meta property="article:published_time" content="2025-06-16T12:25:08.000Z">
+<meta property="article:modified_time" content="2025-08-18T07:45:39.871Z">
+<meta property="article:author" content="Snowmiku">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="树莓派">
+<meta property="article:tag" content="网络打印">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://snowmiku-home.top/images/icon2.jpg"><link rel="shortcut icon" href="/images/icon_small.png"><link rel="canonical" href="http://snowmiku-home.top/2025/06/16/post-2025616/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":true,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.11.1/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '【教程】使用树莓派和CUPS部署远程打印服务',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-08-18 15:45:39'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><style type="text/css">#toggle-sidebar {bottom: 80px}</style><style type="text/css"> #universe {  display: block; position: fixed; margin: 0; padding: 0; border: 0; outline: 0; left: 0; top: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; } </style><meta name="generator" content="Hexo 7.2.0"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" class="aplayer-style-marker">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js" class="aplayer-script-marker"></script>
+</head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/icon2.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder-open"></i><span> 资源</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐库</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.snowmiku-drive.top/"><i class="fa-fw fas fa-folder"></i><span> 下载站</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 更多信息</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/01/about/author-intro/author-intro/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/friends"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/contact"><i class="fa-fw fa fa-handshake"></i><span> 联系和赞助</span></a></li><li><a class="site-page child" href="/update_log"><i class="fa-fw fa fa-file-text"></i><span> 更新日志</span></a></li><li><a class="site-page child" href="/Transgender-Site"><i class="fa-fw fa fa-transgender-alt"></i><span> 里站</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/images/title_miku1.png')"><nav id="nav"><span id="blog-info"><a href="/" title="葱酱的幻想乡 - Snowmiku's Dreamland"><img class="site-icon" src="/images/icon.jpg"/><span class="site-name">葱酱的幻想乡 - Snowmiku's Dreamland</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-folder-open"></i><span> 资源</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/music/"><i class="fa-fw fas fa-music"></i><span> 音乐库</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.snowmiku-drive.top/"><i class="fa-fw fas fa-folder"></i><span> 下载站</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-heart"></i><span> 更多信息</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/2024/06/01/about/author-intro/author-intro/"><i class="fa-fw fa fa-address-card"></i><span> 关于我</span></a></li><li><a class="site-page child" href="/friends"><i class="fa-fw fa fa-link"></i><span> 友情链接</span></a></li><li><a class="site-page child" href="/contact"><i class="fa-fw fa fa-handshake"></i><span> 联系和赞助</span></a></li><li><a class="site-page child" href="/update_log"><i class="fa-fw fa fa-file-text"></i><span> 更新日志</span></a></li><li><a class="site-page child" href="/Transgender-Site"><i class="fa-fw fa fa-transgender-alt"></i><span> 里站</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">【教程】使用树莓派和CUPS部署远程打印服务</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-06-16T12:25:08.000Z" title="发表于 2025-06-16 20:25:08">2025-06-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-08-18T07:45:39.871Z" title="更新于 2025-08-18 15:45:39">2025-08-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="【教程】使用树莓派和CUPS部署远程打印服务"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2025/06/16/post-2025616/#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>文章讲述作者为解决实验室老旧HP LaserJet 3055打印机无法远程打印的问题，尝试使用ESP32-S2&#x2F;S3实现远程打印，但因硬件限制导致效果不佳，最终另寻他法的故事。</p>
+<span id="more"></span>
+
+
+        <div id="aplayer-wFlnCXxm" class="aplayer aplayer-tag-marker" style="margin-bottom: 20px;">
+            <pre class="aplayer-lrc-content"></pre>
+        </div>
+        <script>
+          var ap = new APlayer({
+            element: document.getElementById("aplayer-wFlnCXxm"),
+            narrow: false,
+            autoplay: false,
+            showlrc: false,
+            music: {
+              title: "有声版",
+              author: "Azure AI",
+              url: "/audio/post-2025616.wav",
+              pic: "https://snowmiku-blog-1326916956.cos.ap-hongkong.myqcloud.com/Screenshot_2024-08-15-00-35-26-521_com.tencent.mm.jpg?imageSlim",
+              lrc: ""
+            }
+          });
+          window.aplayers || (window.aplayers = []);
+          window.aplayers.push(ap);
+        </script>
+
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>起因是葱酱的实验室里有一台比较老的HP激光打印机（型号是LaserJet 3055）,这台打印机目前不支持网络打印，想要打印，就只能把笔记本电脑搬到打印机旁边，连接USB进行打印。而且笔者在实验室只有一台台式机，想要打印就只能求助同学。<br>一开始葱酱想用ESP32-S2或S3，搭配USB电平转换器和Espressif官方库提供的<code>usb-printer</code>驱动来实现远程打印，但是手头没有USB模块，而且使用性能较低的单片机进行打印，很多图片或者较大的PDF都会有一些异常。正好我发现了一块闲置的树莓派，于是它派上了用场。</p>
+<h1 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h1><p>我们需要准备以下硬件：</p>
+<ul>
+<li>树莓派</li>
+<li>SD卡</li>
+<li>Type-C电源线，与打印机的连接线</li>
+</ul>
+<p>树莓派的基本配置这里不再赘述，现在假设已经成功在SD卡上安装了Raspberry OS操作系统，并且已经通过<code>wpa_supplicant</code>或者<code>nmcli</code>连接到了无线网络，在电脑上按下Win+R，输入<code>wt</code>，回车，在命令窗口输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh pi@192.168.x.x</span><br></pre></td></tr></table></figure>
+
+<p>连接到树莓派的终端之后，我们就可以进行<del>愉快</del>的配置了。</p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h2 id="本地配置"><a href="#本地配置" class="headerlink" title="本地配置"></a>本地配置</h2><p>首先，Linux系统下有一套控制打印机的软件工具，我们在<code>apt</code>中执行安装操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install -y cups</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> cups</span><br><span class="line">sudo systemctl start cups</span><br></pre></td></tr></table></figure>
+<p>这样就启动了打印机的基本服务，我们现在进行config文件配置。在命令行输入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/cups/cupsd.conf</span><br></pre></td></tr></table></figure>
+<p>会打开一个配置文件，我们需要修改以下几个<br>首先是文件的开头部分，确保以下的选项设置正确：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ServerAlias *  <span class="comment"># 放开所有的ip连接</span></span><br><span class="line">Listen 631</span><br><span class="line">Listen /run/cups/cups.sock</span><br></pre></td></tr></table></figure>
+<p>接下来是下面的代码块，需要补全成下面的形式：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">&lt;Location /&gt;</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow all</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br><span class="line">&lt;Location /admin&gt;</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow all</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br><span class="line">&lt;Location /admin/conf&gt;</span><br><span class="line">  AuthType Default</span><br><span class="line">  Require user @SYSTEM</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow all</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 单独加上</span></span><br><span class="line">&lt;Location /printers&gt; </span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow all</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br><span class="line">&lt;Location /jobs&gt;</span><br><span class="line">  Order allow,deny</span><br><span class="line">  Allow all</span><br><span class="line">&lt;/Location&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>输入<code>Esc-&gt;:wq-&gt;Enter</code>保存退出。<br>为了保证macOS和手机设备的打印协议，我们安装适配服务，然后重启cups服务进程：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install avahi-daemon</span><br><span class="line">sudo systemctl <span class="built_in">enable</span> avahi-daemon</span><br><span class="line">sudo systemctl start avahi-daemon</span><br><span class="line">sudo systemctl restart cups</span><br></pre></td></tr></table></figure>
+
+<p>现在，已经部署好了打印机的连接服务，可以把树莓派连接到打印机的USB接口了。</p>
+<h2 id="连接和添加打印机"><a href="#连接和添加打印机" class="headerlink" title="连接和添加打印机"></a>连接和添加打印机</h2><p>连接打印机之后，输入以下指令查看打印设备列表：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lpinfo -v</span><br></pre></td></tr></table></figure>
+<p>显示出打印机即为成功，葱酱的终端显示了HP Fax和HP LaserJet 3055两个打印机设备。<br>在成功检测到打印机之后，打开电脑的浏览器，访问<code>http://&lt;IP&gt;:631</code>，进入打印机设置界面，进去之后是这样的：<br><a href="...">1</a></p>
+<p>要在树莓派中注册打印机，需要执行：</p>
+<ol>
+<li>点击 “Administration” &gt; “Add Printer”，输入用户名密码（pi &#x2F; 密码）。</li>
+<li>选择你的打印机（一般是 USB 设备），点击 “Continue”。</li>
+<li>命名打印机、设置共享：<ul>
+<li>勾选 “Share This Printer”；</li>
+<li>选择合适的驱动（HP 打印机通常会自动识别）</li>
+</ul>
+</li>
+<li>完成添加。</li>
+</ol>
+<p>添加打印机后，可以在管理界面的主页的<code>Printer</code>选项卡进入打印机列表，如果添加成功，可以看到对应的打印机，点击标签进入详情页后，可以查看打印队列，打印历史等信息。这个界面下会有两个展开式选项卡，将第一个选中<code>Maintainence</code>，第二个选择<code>Print test page</code>，打印机会自动打印测试页，确认树莓派的控制有效且网络畅通。</p>
+<h3 id="在电脑端添加打印机"><a href="#在电脑端添加打印机" class="headerlink" title="在电脑端添加打印机"></a>在电脑端添加打印机</h3><p>要想实现这一点，<strong>静态IP</strong>必不可少，我们继续在树莓派的shell中进行设置，假如我想分配一个<code>192.168.1.50</code>的静态IP，可以这么操作，此操作适用于使用NetworkManager管理连接的系统：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo nmcli connection show  <span class="comment"># 显示所有连接，记录你使用的连接名</span></span><br><span class="line">sudo nmcli connection modify &lt;你的连接名&gt; ipv4.method manual ipv4.addresses 192.168.1.50/24 ipv4.gateway 192.168.1.1 ipv4.dns <span class="string">&quot;8.8.8.8&quot;</span></span><br><span class="line">sudo nmcli connection up &lt;你的连接名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>此时连接会中断，我们需要在电脑的终端中重新连接指定的IP地址，比如笔者的设备：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh pi@<span class="number">192.168</span>.<span class="number">1.50</span></span><br></pre></td></tr></table></figure>
+<p>这样，IP地址就固定了，这一点在稍后的“手动添加”步骤中很关键。</p>
+<h4 id="Windows-10"><a href="#Windows-10" class="headerlink" title="Windows 10"></a>Windows 10</h4><p>Win10系统下，添加比较容易。我们在开始菜单打开“设置”，进入“打印机和扫描仪”选项，选择添加打印机，通常会显示为<code>&lt;Printer model&gt; @raspberrypi</code>，一般情况下都可以添加成功。<br>当由于打印机型号太老或者使用Win11系统出现添加失败的情况时，可以参照下面的操作方法。</p>
+<h4 id="Windows-11或其他无法直接添加的情况"><a href="#Windows-11或其他无法直接添加的情况" class="headerlink" title="Windows 11或其他无法直接添加的情况"></a>Windows 11或其他无法直接添加的情况</h4><p>在需要手动添加的情况下，我们先要获取打印机的驱动文件，笔者下载了一个hp的集成驱动安装程序。程序打开时，会提示解压inf和driver文件的路径（其他的驱动形式也一样，需要inf文件和驱动程序）。<br>在“设置”中搜索打印机的基础上，稍等片刻，打印机列表会出现 <strong>我的打印机不在此列表中</strong> 的选项，点击此选项，选择“通过网址添加打印机”，输入网址：<br><code>http://192.168.1.50:631/printers/HP_LaserJet_3055</code> （不同型号打印机最后一个命名也不同，取决于在树莓派中添加打印机时在网络界面中取的名字）<br>访问成功后，会进入驱动选择界面，选择 <strong>从磁盘安装</strong> ，选择存有inf文件和driver文件夹的安装目录，inf文件可能会有很多个，笔者选择了最大的那个（283KB），选择后会列出兼容的所有设备，选择指定型号的设备或者类似于<code>universal</code>之类的选项（笔者只显示了两个Universal驱动就随便选了），最后点击添加，一段时间后，电脑与打印机的通信完成，设备成功添加到打印机列表。添加之后的效果大概是这样的：<br><a href="">2</a></p>
+<p>现在，我们打开一个文档，执行打印，选择该打印机，就可以实现便捷的远程打印啦~！</p>
+<h1 id="需要更新和修复的目标"><a href="#需要更新和修复的目标" class="headerlink" title="需要更新和修复的目标"></a>需要更新和修复的目标</h1><p>葱酱认为树莓派这种搭载Linux系统的微型电脑终端用来驱动打印机其实是很简单的。这次折腾大概还有以下的不足之处——当然，如果有其他的建议和意见也可以写在下面的评论区，葱酱的后台有设置消息推送，一定会看评论的~qwq</p>
+<ul>
+<li><strong>成本</strong>：树莓派还是很贵的，自然不建议没有树莓派的宝子单独买这东西用来控制打印机，如果需要购买设备，可以搜”无线打印服务器“。葱酱后续也会设计使用ESP32-S3和TinyUSB方案的廉价版本。</li>
+<li><strong>兼容性</strong>：这点可能是打印机的原因，不支持Win11下的自动添加是一个很缺憾和不完美的地方。另外在手机设备的测试中，笔者只测试了Android设备，虽然可以识别和打印，但是连接质量低。经常会出现反复刷新无法找到设备的情况，虽然实验室使用手机打印并不是十分刚需，但笔者仍希望未来可以解决连接稳定性和兼容性的问题。</li>
+<li><strong>其他bug待发现和测试…</strong></li>
+</ul>
+<p>最后，好久没更新了，大家还好吗？（meow</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="http://snowmiku-home.top">Snowmiku</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="http://snowmiku-home.top/2025/06/16/post-2025616/">http://snowmiku-home.top/2025/06/16/post-2025616/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://snowmiku-home.top" target="_blank">葱酱的幻想乡 - Snowmiku's Dreamland</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Linux/">Linux</a><a class="post-meta__tags" href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">树莓派</a><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E6%89%93%E5%8D%B0/">网络打印</a></div><div class="post_share"><div class="social-share" data-image="/images/icon2.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/images/qr_w.jpg" target="_blank"><img class="post-qr-code-img" src="/images/qr_w.jpg" alt="微信赞赏码"/></a><div class="post-qr-code-desc">微信赞赏码</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/08/15/post-2025816/" title="【国赛总结】基于瑞萨电子RA6M5的智能导引系统（开源）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">【国赛总结】基于瑞萨电子RA6M5的智能导引系统（开源）</div></div></a></div><div class="next-post pull-right"><a href="/2024/09/17/post-2024917/" title="【AList】解决上传大文件返回错误413问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">【AList】解决上传大文件返回错误413问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/09/01/post-20249012/" title="更新日记——基于阿里云服务器搭建一个Alist网盘页面"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-01</div><div class="title">更新日记——基于阿里云服务器搭建一个Alist网盘页面</div></div></a></div><div><a href="/2024/09/03/post-2024903/" title="速记——将可执行文件注册为服务"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-09-03</div><div class="title">速记——将可执行文件注册为服务</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/icon2.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Snowmiku</div><div class="author-info__description">一个水贴和存放心情的角落罢了。<br/>记得要开心呀！</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/18650official"><i class="fab fa-github"></i><span>GitHub</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://t.me/mmmiku_18650" target="_blank" title="Telegram"><i class="fab fa-telegram"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">最近一次维护于 2024/9/13</br>以后的更新可以在更多信息-更新日志中查看</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE"><span class="toc-number">3.</span> <span class="toc-text">配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E9%85%8D%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">本地配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E5%92%8C%E6%B7%BB%E5%8A%A0%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="toc-number">3.2.</span> <span class="toc-text">连接和添加打印机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8%E7%94%B5%E8%84%91%E7%AB%AF%E6%B7%BB%E5%8A%A0%E6%89%93%E5%8D%B0%E6%9C%BA"><span class="toc-number">3.2.1.</span> <span class="toc-text">在电脑端添加打印机</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows-10"><span class="toc-number">3.2.1.1.</span> <span class="toc-text">Windows 10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows-11%E6%88%96%E5%85%B6%E4%BB%96%E6%97%A0%E6%B3%95%E7%9B%B4%E6%8E%A5%E6%B7%BB%E5%8A%A0%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">3.2.1.2.</span> <span class="toc-text">Windows 11或其他无法直接添加的情况</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9C%80%E8%A6%81%E6%9B%B4%E6%96%B0%E5%92%8C%E4%BF%AE%E5%A4%8D%E7%9A%84%E7%9B%AE%E6%A0%87"><span class="toc-number">4.</span> <span class="toc-text">需要更新和修复的目标</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/08/15/post-2025816/" title="【国赛总结】基于瑞萨电子RA6M5的智能导引系统（开源）">【国赛总结】基于瑞萨电子RA6M5的智能导引系统（开源）</a><time datetime="2025-08-15T14:50:35.000Z" title="发表于 2025-08-15 22:50:35">2025-08-15</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/06/16/post-2025616/" title="【教程】使用树莓派和CUPS部署远程打印服务">【教程】使用树莓派和CUPS部署远程打印服务</a><time datetime="2025-06-16T12:25:08.000Z" title="发表于 2025-06-16 20:25:08">2025-06-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/17/post-2024917/" title="【AList】解决上传大文件返回错误413问题">【AList】解决上传大文件返回错误413问题</a><time datetime="2024-09-17T09:00:13.000Z" title="发表于 2024-09-17 17:00:13">2024-09-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/03/post-2024903/" title="速记——将可执行文件注册为服务">速记——将可执行文件注册为服务</a><time datetime="2024-09-03T06:37:04.000Z" title="发表于 2024-09-03 14:37:04">2024-09-03</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/09/01/post-20249012/" title="更新日记——基于阿里云服务器搭建一个Alist网盘页面">更新日记——基于阿里云服务器搭建一个Alist网盘页面</a><time datetime="2024-09-01T14:30:50.000Z" title="发表于 2024-09-01 22:30:50">2024-09-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Snowmiku</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.33/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://my-twikoo-steel.vercel.app/',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://my-twikoo-steel.vercel.app/',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') setTimeout(init,0)
+    else getScript('https://cdn.jsdelivr.net/npm/twikoo@1.6.31/dist/twikoo.all.min.js').then(init)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><canvas id="universe"></canvas><script src="/js/universe.js"></script><div class="aplayer no-destroy" data-id="6614644804" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="false" data-lrcType="-1"> </div><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/canvas-nest.min.js"></script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.3/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/miku.model.json"},"display":{"position":"right","width":100,"height":200},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
