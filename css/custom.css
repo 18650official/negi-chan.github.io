@@ -1,0 +1,58 @@
+/* 1. 强制隐藏首页画面正中央的巨大标题，但不影响左上角导航栏 */
+#site-info #site-title {
+    display: none !important;
+}
+
+/* 2. 设置副标题的颜色 */
+html body #page-header #site-info #site-subtitle {
+    color: #39c5bb !important;
+    margin-top: 115px; 
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    font-weight: default; 
+    text-shadow: 0 0 8px rgba(57, 197, 187, 0.4); /* 附赠一点极客风的微发光特效 */
+}
+
+html body #page-header #site-info .typed-cursor {
+    color: #39c5bb !important;
+}
+
+/* 修复内容较少时，底部出现黑色间隙的问题 */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/* 将整个网页的主容器设置为弹性盒，并要求它至少有一屏幕高 */
+#body-wrap {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 强行把页脚推到弹性容器的最底部 */
+#footer {
+    margin-top: auto !important;
+    margin-bottom: 0 !important;
+}
+
+/* ====================================================================
+   修复文章内部竖屏/方形图片过大问题
+   ==================================================================== */
+#article-container img {
+    /* 限制图片最高只能占屏幕高度的 60% (vh = viewport height) */
+    /* 这样不管原图多高，都不会霸占超过大半个屏幕 */
+    max-height: 60vh !important; 
+    
+    /* 覆盖掉主题默认的 width: 100%，让图片宽度根据高度等比例缩放 */
+    width: auto !important; 
+    
+    /* 保证图片依然居中显示 */
+    margin: 0 auto !important; 
+    display: block !important;
+}
+
+/* (可选) 给文章内的图片加一点极简的圆角，配合整体UI */
+#article-container img {
+    border-radius: 8px;
+}
